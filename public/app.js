@@ -10,6 +10,7 @@ const errorBox = document.getElementById('errorBox');
 const errorText = document.getElementById('errorText');
 const retryBtn = document.getElementById('retryBtn');
 const resultFrame = document.getElementById('resultFrame');
+const fullscreenBtn = document.getElementById('fullscreenBtn');
 const restartBtn = document.getElementById('restartBtn');
 const statusEl = document.querySelector('#loading .status');
 const elapsedEl = document.getElementById('elapsed');
@@ -133,8 +134,20 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 function showResult(url) {
   loadingSection.classList.add('hidden');
   resultSection.classList.remove('hidden');
+  fullscreenBtn.href = url;
   resultFrame.src = url;
   resultFrame.addEventListener('load', () => {
+    try {
+      const doc = resultFrame.contentDocument;
+      if (doc) {
+        const style = doc.createElement('style');
+        style.textContent =
+          '.controls,.watermark,.subtitle-bar{display:none!important}' +
+          'body{background:#000!important}' +
+          '.player-wrapper{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;border-radius:0!important;box-shadow:none!important}';
+        doc.head.appendChild(style);
+      }
+    } catch (_) { /* ignore */ }
     setTimeout(() => {
       try {
         const w = resultFrame.contentWindow;
