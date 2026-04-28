@@ -96,7 +96,7 @@ app.post('/api/session/:id/generate', (req, res) => {
   fs.writeFileSync(logPath, `[${new Date().toISOString()}] starting\n`, 'utf8');
   const logStream = fs.createWriteStream(logPath, { flags: 'a' });
 
-  const args = ['-p', prompt, '--dangerously-skip-permissions'];
+  const args = ['--dangerously-skip-permissions', '-p', prompt];
   const proc = spawn(CLAUDE_BIN, args, {
     cwd: ROOT,
     stdio: ['ignore', 'pipe', 'pipe'],
