@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Blogine — blog to short-form video</title>
+<title>Blogine — 블로그를 숏폼 영상으로</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,31 +11,35 @@
 <div id="app">
   <header class="hero">
     <h1>Blogine</h1>
-    <p class="tagline">Turn a blog post into a short-form video.</p>
+    <p class="tagline">블로그 글 → 9:16 숏폼 영상 · 9씬 · ~120초</p>
   </header>
 
   <section id="form" class="card">
     <div class="step">
-      <div class="step-label"><span class="num">1</span> Images</div>
+      <div class="step-label"><span class="num">1</span> 이미지</div>
       <div id="dropzone" class="dropzone">
-        <p class="drop-hint">Drag &amp; drop images, or <span class="link">browse</span></p>
+        <p class="drop-hint">이미지를 끌어다 놓거나 <span class="link">직접 선택</span></p>
         <input type="file" id="fileInput" multiple accept="image/*" hidden>
         <ul id="fileList"></ul>
       </div>
     </div>
 
     <div class="step">
-      <label class="step-label" for="contentText"><span class="num">2</span> Blog content <span class="optional">(optional)</span></label>
-      <textarea id="contentText" rows="10" placeholder="Paste the blog text here, or leave empty to let the images speak for themselves."></textarea>
+      <label class="step-label" for="contentText"><span class="num">2</span> 블로그 내용 <span class="optional">(선택)</span></label>
+      <textarea id="contentText" rows="10" placeholder="블로그 글을 붙여넣으세요. 비워두면 이미지만으로 영상을 만듭니다."></textarea>
     </div>
 
-    <button id="generateBtn" class="primary">Generate video</button>
+    <button id="generateBtn" class="primary">영상 만들기</button>
+    <button id="sampleBtn" class="ghost" type="button">샘플로 한 번 보기</button>
   </section>
 
   <section id="loading" class="card hidden">
-    <div class="spinner"></div>
-    <p class="status">Creating your video…</p>
-    <p class="hint">This usually takes 1–3 minutes.</p>
+    <ul class="stages" id="stages">
+      <li class="stage" data-stage="0"><span class="dot"></span>입력 분석</li>
+      <li class="stage" data-stage="1"><span class="dot"></span>9씬 설계</li>
+      <li class="stage" data-stage="2"><span class="dot"></span>애니메이션 합성</li>
+      <li class="stage" data-stage="3"><span class="dot"></span>마무리</li>
+    </ul>
     <p id="elapsed" class="elapsed"></p>
   </section>
 
@@ -44,15 +48,15 @@
       <iframe id="resultFrame" allow="autoplay"></iframe>
     </div>
     <div class="result-actions">
-      <a id="fullscreenBtn" class="primary as-button" target="_blank" rel="noopener">Open in new tab &nearr;</a>
-      <button id="restartBtn" class="secondary">Make another</button>
+      <a id="fullscreenBtn" class="primary as-button" target="_blank" rel="noopener">큰 화면으로 보기 &nearr;</a>
+      <button id="restartBtn" class="secondary">다시 만들기</button>
     </div>
   </section>
 
   <section id="errorBox" class="card hidden error">
-    <p class="status">Something went wrong.</p>
+    <p class="status">문제가 생겼어요.</p>
     <p id="errorText" class="hint"></p>
-    <button id="retryBtn" class="secondary">Try again</button>
+    <button id="retryBtn" class="secondary">다시 시도</button>
   </section>
 </div>
 
