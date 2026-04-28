@@ -55,10 +55,6 @@ generateBtn.addEventListener('click', async () => {
     alert('Please add at least one image.');
     return;
   }
-  if (!contentText.value.trim()) {
-    alert('Please paste the blog content.');
-    return;
-  }
 
   formSection.classList.add('hidden');
   loadingSection.classList.remove('hidden');

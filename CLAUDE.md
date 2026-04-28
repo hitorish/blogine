@@ -38,8 +38,9 @@
 
 1. **시작**: `template/`를 통째로 `sessions/<id>/output/`으로 복사.
 2. **입력 읽기**:
-   - `sessions/<id>/input/content.txt` — 블로그 텍스트
+   - `sessions/<id>/input/content.txt` — 블로그 텍스트 (**비어 있을 수 있음**)
    - `sessions/<id>/input/images/` — 업로드된 이미지 (`1.png`, `2.png`, …)
+   - `content.txt`가 비어 있으면 이미지의 시각적 내용과 파일명에서 주제를 추론해 자체 카피라이팅 생성. 이미지가 N장이면 인트로/아웃트로/브랜드 씬을 제외한 본문 씬에 골고루 배치.
 3. **`output/index.html` 갱신**:
    - 9개 씬 레이아웃 유지
    - 텍스트 콘텐츠를 새 블로그 내용으로 교체
