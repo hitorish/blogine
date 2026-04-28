@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NK세포 - 암 잡는 면역세포</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Noto Sans KR', sans-serif;
+  overflow: hidden;
+}
+
+.player-wrapper {
+  width: 100%;
+  max-width: 720px;
+  aspect-ratio: 9/16;
+  max-height: 95vh;
+  position: relative;
+  background: #000;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 60px rgba(0,0,0,0.8);
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: none;
+}
+.scene.active { opacity: 1; pointer-events: auto; }
+
+/* ===================== SCENE 1 - Intro ===================== */
+.scene-1 {
+  background: linear-gradient(160deg, #1a0a0a 0%, #3d1111 30%, #2a0808 60%, #0d1a0d 100%);
+  overflow: hidden;
+}
+.scene-1::before {
+  content: '';
+  position: absolute;
+  width: 300%; height: 300%;
+  top: -100%; left: -100%;
+  background: radial-gradient(circle at 55% 45%, rgba(200,30,30,0.2) 0%, transparent 45%),
+              radial-gradient(circle at 40% 60%, rgba(180,0,0,0.1) 0%, transparent 40%);
+  animation: pulseGlow 5s ease-in-out infinite;
+}
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.scene-1 .cell-cluster {
+  position: absolute;
+  top: 8%; left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 400px;
+  opacity: 0;
+}
+
+.scene-1 .subtitle {
+  color: rgba(255,255,255,0.75);
+  font-size: clamp(13px, 2.8vw, 18px);
+  letter-spacing: 5px;
+  margin-top: 45%;
+  opacity: 0;
+  transform: translateY(20px);
+  position: relative;
+  z-index: 2;
+}
+
+.scene-1 .title-main {
+  font-size: clamp(30px, 7.5vw, 52px);
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  line-height: 1.3;
+  opacity: 0;
+  transform: translateY(30px);
+  position: relative;
+  z-index: 2;
+  margin-top: 10px;
+}
+.scene-1 .title-main span { color: #4ade80; }
+
+.scene-1 .line-accent {
+  width: 0; height: 3px;
+  background: linear-gradient(90deg, #4ade80, #22c55e);
+  margin-top: 20px;
+  border-radius: 2px;
+  position: relative;
+  z-index: 2;
+}
+
+.scene-1 .floating-cells {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===================== SCENE 2 - NK세포란 ===================== */
+.scene-2 {
+  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%);
+  padding: 7% 8%;
+}
+
+.scene-2 .cell-bg-top {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  opacity: 0;
+  z-index: 0;
+}
+
+.scene-2 .cell-illust {
+  width: 55%;
+  max-width: 260px;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: scale(0.85);
+  position: relative;
+  z-index: 1;
+}
+
+.scene-2 .heading {
+  font-size: clamp(22px, 5.5vw, 36px);
+  font-weight: 900;
+  color: #111;
+  text-align: center;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(-20px);
+  position: relative;
+  z-index: 1;
+}
+.scene-2 .heading span { color: #16a34a; }
+
+.scene-2 .body-text {
+  font-size: clamp(13px, 3vw, 18px);
+  color: #374151;
+  line-height: 1.9;
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.scene-2 .highlight-box {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  border-left: 4px solid #16a34a;
+  padding: 14px 18px;
+  border-radius: 0 12px 12px 0;
+  margin-top: 20px;
+  font-weight: 700;
+  color: #15803d;
+  font-size: clamp(12px, 2.8vw, 16px);
+  opacity: 0;
+  transform: translateX(-30px);
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+.scene-2 .footnote {
+  font-size: clamp(10px, 2vw, 12px);
+  color: #9ca3af;
+  margin-top: 16px;
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===================== SCENE 3 - 퍼포린/그랜자임 ===================== */
+.scene-3 {
+  background: linear-gradient(180deg, #fafafa 0%, #f0fdf4 100%);
+  padding: 7% 8%;
+}
+
+.scene-3 .heading {
+  font-size: clamp(21px, 5.2vw, 32px);
+  font-weight: 900;
+  color: #111;
+  align-self: flex-start;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(-30px);
+}
+.scene-3 .heading span { color: #16a34a; }
+
+.scene-3 .attack-visual {
+  width: 92%;
+  max-width: 420px;
+  margin: 16px auto;
+  opacity: 0;
+  transform: scale(0.9);
+  display: block;
+}
+
+.scene-3 .mechanism-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mech-step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  transform: translateX(-40px);
+}
+
+.mech-step .step-num {
+  min-width: 40px; height: 40px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 900;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.mech-step .step-text {
+  font-size: clamp(12px, 2.8vw, 16px);
+  color: #374151;
+  line-height: 1.6;
+}
+.mech-step .step-text strong { color: #15803d; }
+
+.scene-3 .important-note {
+  margin-top: 20px;
+  padding: 14px;
+  background: rgba(239,68,68,0.07);
+  border-radius: 12px;
+  border: 1px solid rgba(239,68,68,0.2);
+  font-size: clamp(12px, 2.8vw, 15px);
+  color: #dc2626;
+  font-weight: 700;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+/* ===================== SCENE 4 - vs 비교 ===================== */
+.scene-4 {
+  background: linear-gradient(180deg, #16a34a, #15803d);
+  padding: 7% 6%;
+}
+
+.scene-4 .sub-question {
+  font-size: clamp(13px, 3vw, 17px);
+  color: rgba(255,255,255,0.75);
+  margin-top: 8px;
+  opacity: 0;
+}
+
+.scene-4 .heading {
+  font-size: clamp(22px, 5.5vw, 34px);
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.scene-4 .cards-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+  width: 100%;
+}
+
+.cell-card {
+  flex: 1;
+  background: rgba(255,255,255,0.95);
+  border-radius: 16px;
+  padding: 18px 10px 16px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px);
+  position: relative;
+}
+
+.cell-card .card-num {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px; height: 22px;
+  background: rgba(0,0,0,0.15);
+  border-radius: 50%;
+  font-size: 11px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.cell-card .cell-visual {
+  width: 64px; height: 64px;
+  margin: 8px auto 10px;
+}
+
+.cell-card .cell-name {
+  font-weight: 900;
+  font-size: clamp(14px, 3.2vw, 18px);
+  margin-bottom: 6px;
+  color: #111;
+}
+
+.cell-card .cell-desc {
+  font-size: clamp(10px, 2.2vw, 13px);
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.cell-card:nth-child(3) {
+  border: 2px solid #22c55e;
+  box-shadow: 0 0 20px rgba(34,197,94,0.3);
+}
+.cell-card:nth-child(3) .cell-name { color: #16a34a; }
+
+.scene-4 .bottom-note {
+  margin-top: 20px;
+  font-size: clamp(12px, 2.8vw, 15px);
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.scene-4 .bottom-note strong { color: #bbf7d0; }
+
+/* ===================== SCENE 5 - 떨어지면 ===================== */
+.scene-5 {
+  background: linear-gradient(180deg, #f0f4ff 0%, #fef2f2 100%);
+  padding: 7% 8%;
+  overflow: hidden;
+}
+
+.scene-5 .bg-cells {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+.scene-5 .heading {
+  font-size: clamp(22px, 5.5vw, 34px);
+  font-weight: 900;
+  color: #111;
+  align-self: flex-start;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateX(-30px);
+  position: relative;
+  z-index: 1;
+}
+.scene-5 .heading em {
+  color: #16a34a;
+  font-style: normal;
+}
+
+.scene-5 .warning-content {
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  position: relative;
+  z-index: 1;
+}
+
+.scene-5 .warning-content p {
+  font-size: clamp(13px, 3vw, 17px);
+  color: #374151;
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+.scene-5 .question-prompt {
+  margin-top: 16px;
+  font-size: clamp(13px, 3vw, 16px);
+  color: #16a34a;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(10px);
+  position: relative;
+  z-index: 1;
+}
+
+.scene-5 .danger-meter {
+  width: 100%;
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 5px;
+  margin-top: 18px;
+  overflow: hidden;
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.scene-5 .danger-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #22c55e, #fbbf24, #f59e0b, #ef4444, #dc2626);
+  border-radius: 5px;
+  transition: width 1.5s ease-out;
+}
+
+.scene-5 .meter-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: clamp(10px, 2.2vw, 12px);
+  color: #9ca3af;
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.scene-5 .source {
+  margin-top: 16px;
+  font-size: clamp(9px, 1.8vw, 11px);
+  color: #b0b0b0;
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===================== SCENE 6 - 활성도 검사 ===================== */
+.scene-6 {
+  background: linear-gradient(180deg, #16a34a, #15803d);
+  padding: 7% 6%;
+}
+
+.scene-6 .test-illust {
+  width: 45%;
+  max-width: 180px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.scene-6 .top-label {
+  font-size: clamp(13px, 3vw, 17px);
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+  margin-bottom: 6px;
+  opacity: 0;
+}
+
+.scene-6 .heading {
+  font-size: clamp(22px, 5.5vw, 32px);
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.level-table {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.level-row {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #f0f0f0;
+  opacity: 0;
+  transform: translateX(30px);
+}
+.level-row:last-child { border-bottom: none; }
+
+.level-label {
+  min-width: 28%;
+  padding: 12px 12px;
+  font-weight: 700;
+  font-size: clamp(11px, 2.6vw, 14px);
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.level-row:nth-child(1) .level-label { background: #ef4444; }
+.level-row:nth-child(2) .level-label { background: #f59e0b; }
+.level-row:nth-child(3) .level-label { background: #a3e635; color: #365314; }
+.level-row:nth-child(4) .level-label { background: #22c55e; }
+
+.level-detail {
+  flex: 1;
+  padding: 10px 12px;
+  font-size: clamp(10px, 2.4vw, 13px);
+  color: #374151;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.5;
+}
+.level-detail .val { font-weight: 700; color: #111; font-size: clamp(11px, 2.6vw, 14px); }
+
+.scene-6 .table-note {
+  margin-top: 16px;
+  font-size: clamp(11px, 2.5vw, 14px);
+  color: rgba(255,255,255,0.85);
+  text-align: center;
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+/* ===================== SCENE 7 - 관리법 ===================== */
+.scene-7 {
+  background: linear-gradient(180deg, #f0fdf4 0%, #ecfdf5 100%);
+  padding: 7% 8%;
+}
+
+.scene-7 .heading {
+  font-size: clamp(22px, 5.5vw, 34px);
+  font-weight: 900;
+  color: #111;
+  align-self: flex-start;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+.scene-7 .heading span { color: #16a34a; }
+
+.scene-7 .body-text {
+  font-size: clamp(13px, 3vw, 17px);
+  color: #374151;
+  line-height: 1.8;
+  margin-top: 16px;
+  align-self: flex-start;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+.manage-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 24px;
+  width: 100%;
+}
+
+.manage-item {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 12px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.manage-item .icon-wrap {
+  width: 52px; height: 52px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.manage-item .label {
+  font-weight: 700;
+  font-size: clamp(13px, 3vw, 16px);
+  color: #111;
+}
+
+.scene-7 .closing-text {
+  font-size: clamp(12px, 2.8vw, 15px);
+  color: #16a34a;
+  font-weight: 700;
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(10px);
+  text-align: center;
+}
+
+/* ===================== SCENE 8 - Outro ===================== */
+.scene-8 {
+  background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%);
+  padding: 8%;
+  text-align: center;
+}
+
+.scene-8 .shield-illust {
+  width: 35%;
+  max-width: 160px;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.scene-8 .outro-heading {
+  font-size: clamp(20px, 5vw, 32px);
+  font-weight: 900;
+  color: #111;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.scene-8 .outro-highlight {
+  font-size: clamp(24px, 6vw, 40px);
+  font-weight: 900;
+  color: #16a34a;
+  margin-top: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.scene-8 .outro-body {
+  font-size: clamp(13px, 3vw, 17px);
+  color: #374151;
+  margin-top: 28px;
+  line-height: 1.8;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.scene-8 .outro-cta {
+  font-size: clamp(14px, 3.2vw, 18px);
+  color: #15803d;
+  font-weight: 700;
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+.scene-8 .brand {
+  margin-top: 40px;
+  font-size: clamp(12px, 2.8vw, 16px);
+  color: #9ca3af;
+  letter-spacing: 4px;
+  opacity: 0;
+}
+
+/* ===================== Controls ===================== */
+.controls {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 12px 16px 16px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.5));
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progress-bar {
+  width: 100%; height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  cursor: pointer;
+}
+.progress-bar:hover { height: 6px; }
+
+.progress-fill {
+  height: 100%;
+  background: #4ade80;
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-play {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+}
+
+.time-display {
+  color: rgba(255,255,255,0.8);
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+
+.scene-indicator {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+}
+
+.scene-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transition: all 0.3s;
+}
+.scene-dot.active {
+  background: #4ade80;
+  width: 18px;
+  border-radius: 3px;
+}
+
+/* ===================== Animations ===================== */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeInScale { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes widthGrow { from { width: 0; } to { width: 80px; } }
+@keyframes sceneTransition { 0% { opacity: 0; filter: blur(6px); } 100% { opacity: 1; filter: blur(0); } }
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 0.3; }
+  50% { opacity: 0.15; }
+  100% { transform: translateY(-120vh) scale(0.5); opacity: 0; }
+}
+
+.anim-fade-up { animation: fadeInUp 0.7s ease forwards; }
+.anim-fade-left { animation: fadeInLeft 0.7s ease forwards; }
+.anim-fade-right { animation: fadeInRight 0.7s ease forwards; }
+.anim-fade-scale { animation: fadeInScale 0.7s ease forwards; }
+.anim-fade-in { animation: fadeIn 0.6s ease forwards; }
+.anim-width { animation: widthGrow 0.8s ease forwards; }
+.anim-scene { animation: sceneTransition 0.5s ease forwards; }
+
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.35s; }
+.delay-3 { animation-delay: 0.55s; }
+.delay-4 { animation-delay: 0.75s; }
+.delay-5 { animation-delay: 0.95s; }
+.delay-6 { animation-delay: 1.15s; }
+
+.watermark {
+  position: absolute;
+  bottom: 70px; right: 16px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 2px;
+  z-index: 50;
+  pointer-events: none;
+}
+</style>
+</head>
+<body>
+
+<div class="player-wrapper" id="player">
+
+  <!-- ====== Scene 1: Intro ====== -->
+  <div class="scene scene-1 active" id="scene-1">
+    <div class="floating-cells" id="floatingCells"></div>
+    <svg class="cell-cluster" viewBox="0 0 400 220" fill="none">
+      <!-- 혈관 배경 -->
+      <ellipse cx="200" cy="110" rx="190" ry="100" fill="url(#bloodGrad)" opacity="0.25"/>
+      <!-- NK 세포들 -->
+      <g transform="translate(120, 30)">
+        <circle cx="40" cy="40" r="28" fill="#b0deff" opacity="0.9"/>
+        <circle cx="40" cy="12" r="7" fill="#8ecfff"/>
+        <circle cx="64" cy="22" r="7" fill="#8ecfff"/>
+        <circle cx="68" cy="46" r="7" fill="#8ecfff"/>
+        <circle cx="58" cy="66" r="7" fill="#8ecfff"/>
+        <circle cx="34" cy="70" r="7" fill="#8ecfff"/>
+        <circle cx="14" cy="58" r="7" fill="#8ecfff"/>
+        <circle cx="12" cy="34" r="7" fill="#8ecfff"/>
+        <circle cx="22" cy="16" r="7" fill="#8ecfff"/>
+        <circle cx="40" cy="40" r="16" fill="#7ec8ff"/>
+        <circle cx="36" cy="36" r="4" fill="#4aa8e8"/>
+        <circle cx="44" cy="42" r="3" fill="#4aa8e8"/>
+      </g>
+      <g transform="translate(220, 60)">
+        <circle cx="30" cy="30" r="22" fill="#b0deff" opacity="0.85"/>
+        <circle cx="30" cy="8" r="6" fill="#8ecfff"/>
+        <circle cx="50" cy="20" r="6" fill="#8ecfff"/>
+        <circle cx="48" cy="42" r="6" fill="#8ecfff"/>
+        <circle cx="28" cy="54" r="6" fill="#8ecfff"/>
+        <circle cx="10" cy="40" r="6" fill="#8ecfff"/>
+        <circle cx="12" cy="18" r="6" fill="#8ecfff"/>
+        <circle cx="30" cy="30" r="13" fill="#7ec8ff"/>
+        <circle cx="27" cy="28" r="3" fill="#4aa8e8"/>
+      </g>
+      <g transform="translate(60, 80)">
+        <circle cx="24" cy="24" r="18" fill="#b0deff" opacity="0.7"/>
+        <circle cx="24" cy="6" r="5" fill="#8ecfff"/>
+        <circle cx="40" cy="16" r="5" fill="#8ecfff"/>
+        <circle cx="38" cy="34" r="5" fill="#8ecfff"/>
+        <circle cx="22" cy="42" r="5" fill="#8ecfff"/>
+        <circle cx="8" cy="32" r="5" fill="#8ecfff"/>
+        <circle cx="10" cy="14" r="5" fill="#8ecfff"/>
+        <circle cx="24" cy="24" r="10" fill="#7ec8ff"/>
+      </g>
+      <g transform="translate(280, 20)">
+        <circle cx="20" cy="20" r="15" fill="#b0deff" opacity="0.6"/>
+        <circle cx="20" cy="5" r="4.5" fill="#8ecfff"/>
+        <circle cx="33" cy="14" r="4.5" fill="#8ecfff"/>
+        <circle cx="30" cy="30" r="4.5" fill="#8ecfff"/>
+        <circle cx="18" cy="36" r="4.5" fill="#8ecfff"/>
+        <circle cx="6" cy="26" r="4.5" fill="#8ecfff"/>
+        <circle cx="8" cy="12" r="4.5" fill="#8ecfff"/>
+        <circle cx="20" cy="20" r="9" fill="#7ec8ff"/>
+      </g>
+      <defs>
+        <radialGradient id="bloodGrad"><stop offset="0%" stop-color="#cc3333"/><stop offset="100%" stop-color="#660000" stop-opacity="0"/></radialGradient>
+      </defs>
+    </svg>
+    <div class="subtitle">우리 몸의 건강 방어선</div>
+    <div class="title-main">암 잡는<br><span>NK세포</span>의 정체</div>
+    <div class="line-accent"></div>
+  </div>
+
+  <!-- ====== Scene 2: NK세포란? ====== -->
+  <div class="scene scene-2" id="scene-2">
+    <!-- 상단 혈관 배경 일러스트 -->
+    <svg class="cell-bg-top" viewBox="0 0 400 200" fill="none">
+      <!-- 혈관 벽 -->
+      <path d="M0,40 Q60,20 120,45 Q200,70 280,35 Q350,10 400,30 L400,0 L0,0 Z" fill="#f9a8a8" opacity="0.25"/>
+      <path d="M0,200 Q80,170 160,190 Q260,210 340,175 Q380,160 400,170 L400,200 L0,200 Z" fill="#f9a8a8" opacity="0.2"/>
+      <!-- 적혈구들 -->
+      <ellipse cx="60" cy="90" rx="18" ry="10" fill="#e57373" opacity="0.35" transform="rotate(-15,60,90)"/>
+      <ellipse cx="60" cy="90" rx="8" ry="4" fill="#c62828" opacity="0.15" transform="rotate(-15,60,90)"/>
+      <ellipse cx="160" cy="130" rx="16" ry="9" fill="#e57373" opacity="0.3" transform="rotate(10,160,130)"/>
+      <ellipse cx="160" cy="130" rx="7" ry="3.5" fill="#c62828" opacity="0.12" transform="rotate(10,160,130)"/>
+      <ellipse cx="300" cy="80" rx="17" ry="10" fill="#e57373" opacity="0.3" transform="rotate(-8,300,80)"/>
+      <ellipse cx="300" cy="80" rx="7" ry="4" fill="#c62828" opacity="0.12" transform="rotate(-8,300,80)"/>
+      <ellipse cx="350" cy="150" rx="14" ry="8" fill="#e57373" opacity="0.25" transform="rotate(20,350,150)"/>
+      <ellipse cx="100" cy="160" rx="15" ry="8" fill="#e57373" opacity="0.2" transform="rotate(-5,100,160)"/>
+      <!-- NK 세포들 (혈관 속) -->
+      <g transform="translate(200, 70)">
+        <circle cx="22" cy="22" r="16" fill="#7ec8ff" opacity="0.5"/>
+        <circle cx="22" cy="8" r="5" fill="#5bb8f5" opacity="0.5"/>
+        <circle cx="36" cy="16" r="5" fill="#5bb8f5" opacity="0.5"/>
+        <circle cx="34" cy="30" r="5" fill="#5bb8f5" opacity="0.5"/>
+        <circle cx="20" cy="38" r="5" fill="#5bb8f5" opacity="0.5"/>
+        <circle cx="8" cy="28" r="5" fill="#5bb8f5" opacity="0.5"/>
+        <circle cx="10" cy="14" r="5" fill="#5bb8f5" opacity="0.5"/>
+      </g>
+      <g transform="translate(80, 100)" opacity="0.4">
+        <circle cx="14" cy="14" r="10" fill="#7ec8ff"/>
+        <circle cx="14" cy="4" r="3.5" fill="#5bb8f5"/>
+        <circle cx="23" cy="9" r="3.5" fill="#5bb8f5"/>
+        <circle cx="22" cy="20" r="3.5" fill="#5bb8f5"/>
+        <circle cx="12" cy="24" r="3.5" fill="#5bb8f5"/>
+        <circle cx="4" cy="18" r="3.5" fill="#5bb8f5"/>
+        <circle cx="6" cy="7" r="3.5" fill="#5bb8f5"/>
+      </g>
+      <g transform="translate(310, 110)" opacity="0.35">
+        <circle cx="12" cy="12" r="9" fill="#7ec8ff"/>
+        <circle cx="12" cy="3" r="3" fill="#5bb8f5"/>
+        <circle cx="20" cy="8" r="3" fill="#5bb8f5"/>
+        <circle cx="18" cy="18" r="3" fill="#5bb8f5"/>
+        <circle cx="10" cy="22" r="3" fill="#5bb8f5"/>
+        <circle cx="3" cy="16" r="3" fill="#5bb8f5"/>
+        <circle cx="5" cy="6" r="3" fill="#5bb8f5"/>
+      </g>
+    </svg>
+    <!-- 중앙 NK세포 일러스트 -->
+    <svg class="cell-illust" viewBox="0 0 260 180" fill="none">
+      <!-- NK cell body -->
+      <g transform="translate(90, 30)">
+        <circle cx="40" cy="50" r="38" fill="#7ec8ff"/>
+        <circle cx="40" cy="12" r="10" fill="#5bb8f5"/>
+        <circle cx="72" cy="28" r="10" fill="#5bb8f5"/>
+        <circle cx="76" cy="58" r="10" fill="#5bb8f5"/>
+        <circle cx="62" cy="82" r="10" fill="#5bb8f5"/>
+        <circle cx="34" cy="90" r="10" fill="#5bb8f5"/>
+        <circle cx="8" cy="72" r="10" fill="#5bb8f5"/>
+        <circle cx="4" cy="40" r="10" fill="#5bb8f5"/>
+        <circle cx="18" cy="16" r="10" fill="#5bb8f5"/>
+        <!-- nucleus -->
+        <circle cx="40" cy="50" r="20" fill="#4aa8e8"/>
+        <circle cx="35" cy="45" r="6" fill="#3b93d0"/>
+        <circle cx="46" cy="54" r="4" fill="#3b93d0"/>
+      </g>
+      <!-- small companion cells -->
+      <g transform="translate(20, 100)" opacity="0.7">
+        <circle cx="16" cy="16" r="12" fill="#7ec8ff"/>
+        <circle cx="16" cy="4" r="4" fill="#5bb8f5"/>
+        <circle cx="27" cy="10" r="4" fill="#5bb8f5"/>
+        <circle cx="26" cy="22" r="4" fill="#5bb8f5"/>
+        <circle cx="14" cy="28" r="4" fill="#5bb8f5"/>
+        <circle cx="4" cy="20" r="4" fill="#5bb8f5"/>
+        <circle cx="6" cy="8" r="4" fill="#5bb8f5"/>
+      </g>
+      <g transform="translate(200, 80)" opacity="0.6">
+        <circle cx="14" cy="14" r="10" fill="#7ec8ff"/>
+        <circle cx="14" cy="4" r="3.5" fill="#5bb8f5"/>
+        <circle cx="23" cy="9" r="3.5" fill="#5bb8f5"/>
+        <circle cx="22" cy="20" r="3.5" fill="#5bb8f5"/>
+        <circle cx="12" cy="24" r="3.5" fill="#5bb8f5"/>
+        <circle cx="4" cy="18" r="3.5" fill="#5bb8f5"/>
+        <circle cx="6" cy="7" r="3.5" fill="#5bb8f5"/>
+      </g>
+    </svg>
+    <div class="heading"><span>NK세포</span>란 무엇일까?</div>
+    <div class="body-text">NK세포(Natural Killer Cell)는<br>선천면역을 담당하는 대표적인 면역세포로,<br><strong style="color:#16a34a">바이러스에 감염된 세포나 암세포를<br>빠르게 인식해 직접 사멸시키는 기능</strong>을 합니다.</div>
+    <div class="highlight-box">항체나 기억 면역 없이도 즉각 반응하는 것이 가장 큰 특징입니다.</div>
+    <div class="footnote">*NK세포(Natural Killer Cell): 자연 살해 세포</div>
+  </div>
+
+  <!-- ====== Scene 3: 퍼포린/그랜자임 ====== -->
+  <div class="scene scene-3" id="scene-3">
+    <div class="heading">왜 NK세포를<br><span>'암을 잡는 세포'</span>라 부를까</div>
+    <!-- NK vs Cancer visual -->
+    <svg class="attack-visual" viewBox="0 0 360 180" fill="none" style="width:90%;max-width:420px;">
+      <!-- 배경 하이라이트 -->
+      <rect x="0" y="0" width="360" height="180" rx="16" fill="#f0fdf4" opacity="0.5"/>
+
+      <!-- NK cell (왼쪽) -->
+      <g transform="translate(20, 30)">
+        <circle cx="50" cy="60" r="42" fill="#7ec8ff"/>
+        <circle cx="50" cy="18" r="11" fill="#5bb8f5"/>
+        <circle cx="84" cy="34" r="11" fill="#5bb8f5"/>
+        <circle cx="88" cy="68" r="11" fill="#5bb8f5"/>
+        <circle cx="72" cy="96" r="11" fill="#5bb8f5"/>
+        <circle cx="38" cy="104" r="11" fill="#5bb8f5"/>
+        <circle cx="10" cy="82" r="11" fill="#5bb8f5"/>
+        <circle cx="8" cy="46" r="11" fill="#5bb8f5"/>
+        <circle cx="24" cy="22" r="11" fill="#5bb8f5"/>
+        <circle cx="50" cy="60" r="22" fill="#4aa8e8"/>
+        <text x="38" y="66" fill="#fff" font-size="16" font-weight="900">NK</text>
+      </g>
+
+      <!-- 공격 화살표/물질 (중앙) -->
+      <g>
+        <!-- 퍼포린 라벨 -->
+        <rect x="140" y="28" width="56" height="20" rx="4" fill="#dcfce7"/>
+        <text x="148" y="42" fill="#15803d" font-size="11" font-weight="700">퍼포린</text>
+        <!-- 공격선 -->
+        <line x1="130" y1="60" x2="220" y2="55" stroke="#22c55e" stroke-width="2.5" stroke-dasharray="8,5" opacity="0.8"/>
+        <line x1="130" y1="80" x2="220" y2="80" stroke="#22c55e" stroke-width="2.5" stroke-dasharray="8,5" opacity="0.8"/>
+        <line x1="130" y1="100" x2="220" y2="105" stroke="#22c55e" stroke-width="2.5" stroke-dasharray="8,5" opacity="0.8"/>
+        <!-- 화살표 머리 -->
+        <polygon points="220,52 228,55 220,58" fill="#22c55e" opacity="0.8"/>
+        <polygon points="220,77 228,80 220,83" fill="#22c55e" opacity="0.8"/>
+        <polygon points="220,102 228,105 220,108" fill="#22c55e" opacity="0.8"/>
+        <!-- 그랜자임 라벨 -->
+        <rect x="140" y="125" width="66" height="20" rx="4" fill="#dcfce7"/>
+        <text x="145" y="139" fill="#15803d" font-size="11" font-weight="700">그랜자임</text>
+      </g>
+
+      <!-- Cancer cell (오른쪽) -->
+      <g transform="translate(230, 20)">
+        <!-- 암세포 외형 - 불규칙한 형태 -->
+        <path d="M55,65 Q62,15 85,35 Q112,18 108,55 Q130,68 110,88 Q118,118 88,110 Q72,130 55,112 Q30,125 35,92 Q8,85 28,68 Q14,40 42,45 Z" fill="#d8b4fe" opacity="0.4"/>
+        <path d="M55,65 Q60,22 82,38 Q105,25 102,58 Q122,70 106,85 Q112,112 86,105 Q72,122 57,107 Q35,116 38,90 Q14,82 32,70 Q20,46 46,48 Z" fill="#a78bfa" opacity="0.55"/>
+        <circle cx="70" cy="72" r="22" fill="#7c3aed" opacity="0.5"/>
+        <circle cx="65" cy="66" r="7" fill="#6d28d9" opacity="0.45"/>
+        <circle cx="78" cy="78" r="5" fill="#6d28d9" opacity="0.4"/>
+        <!-- 균열/데미지 효과 -->
+        <line x1="32" y1="60" x2="50" y2="64" stroke="#ef4444" stroke-width="2.5" opacity="0.75" stroke-linecap="round"/>
+        <line x1="34" y1="72" x2="50" y2="70" stroke="#ef4444" stroke-width="2.5" opacity="0.75" stroke-linecap="round"/>
+        <line x1="36" y1="84" x2="52" y2="80" stroke="#ef4444" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+        <!-- 파괴 파편 -->
+        <circle cx="38" cy="56" r="2" fill="#fca5a5" opacity="0.6"/>
+        <circle cx="30" cy="78" r="1.5" fill="#fca5a5" opacity="0.5"/>
+        <circle cx="40" cy="90" r="2" fill="#fca5a5" opacity="0.5"/>
+        <!-- 라벨 -->
+        <text x="45" y="150" fill="#7c3aed" font-size="12" font-weight="700" opacity="0.7">암세포</text>
+      </g>
+    </svg>
+    <div class="mechanism-box">
+      <div class="mech-step">
+        <div class="step-num">1</div>
+        <div class="step-text">암세포 표면의 <strong>이상 신호 감지</strong></div>
+      </div>
+      <div class="mech-step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>퍼포린</strong>으로 암세포 막에 구멍 형성</div>
+      </div>
+      <div class="mech-step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>그랜자임</strong> 주입으로 직접 파괴</div>
+      </div>
+    </div>
+    <div class="important-note">암세포가 성장하기 전, 초기 단계에서 특히 중요!</div>
+  </div>
+
+  <!-- ====== Scene 4: vs 다른 면역세포 ====== -->
+  <div class="scene scene-4" id="scene-4">
+    <div class="heading">NK세포 vs 다른 면역세포</div>
+    <div class="sub-question">NK세포는 뭐가 다를까?</div>
+    <div class="cards-row">
+      <div class="cell-card">
+        <div class="card-num">1</div>
+        <svg class="cell-visual" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="26" fill="#1a1a2e" opacity="0.85"/>
+          <circle cx="32" cy="32" r="22" fill="#16213e"/>
+          <circle cx="28" cy="28" r="10" fill="#0f3460" opacity="0.7"/>
+          <circle cx="36" cy="36" r="7" fill="#0f3460" opacity="0.5"/>
+          <circle cx="32" cy="32" r="26" stroke="#533483" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="20" cy="20" r="2" fill="#7c3aed" opacity="0.4"/>
+          <circle cx="44" cy="24" r="1.5" fill="#7c3aed" opacity="0.3"/>
+        </svg>
+        <div class="cell-name">T세포</div>
+        <div class="cell-desc">학습 &middot; 기억<br>후 공격</div>
+      </div>
+      <div class="cell-card">
+        <div class="card-num">2</div>
+        <svg class="cell-visual" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="24" fill="#1e3a5f"/>
+          <circle cx="32" cy="32" r="18" fill="#2563eb" opacity="0.4"/>
+          <circle cx="26" cy="28" r="6" fill="#3b82f6" opacity="0.5"/>
+          <circle cx="38" cy="34" r="5" fill="#3b82f6" opacity="0.4"/>
+          <circle cx="32" cy="32" r="24" stroke="#60a5fa" stroke-width="1" opacity="0.5"/>
+          <!-- 표면 무늬 -->
+          <path d="M16,24 Q24,20 28,14" stroke="#93c5fd" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M46,28 Q40,22 44,16" stroke="#93c5fd" stroke-width="0.8" fill="none" opacity="0.4"/>
+          <path d="M20,44 Q28,42 32,48" stroke="#93c5fd" stroke-width="0.8" fill="none" opacity="0.4"/>
+        </svg>
+        <div class="cell-name">B세포</div>
+        <div class="cell-desc">학습 &middot; 기억<br>후 항체 생성</div>
+      </div>
+      <div class="cell-card">
+        <div class="card-num">3</div>
+        <svg class="cell-visual" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="20" fill="#7ec8ff"/>
+          <circle cx="32" cy="12" r="6" fill="#5bb8f5"/>
+          <circle cx="50" cy="24" r="6" fill="#5bb8f5"/>
+          <circle cx="50" cy="42" r="6" fill="#5bb8f5"/>
+          <circle cx="38" cy="54" r="6" fill="#5bb8f5"/>
+          <circle cx="22" cy="52" r="6" fill="#5bb8f5"/>
+          <circle cx="14" cy="38" r="6" fill="#5bb8f5"/>
+          <circle cx="16" cy="22" r="6" fill="#5bb8f5"/>
+          <circle cx="32" cy="32" r="11" fill="#4aa8e8"/>
+          <circle cx="29" cy="29" r="3" fill="#3b93d0"/>
+        </svg>
+        <div class="cell-name">NK세포</div>
+        <div class="cell-desc">학습 없이<br><b style="color:#16a34a">즉각 공격</b></div>
+      </div>
+    </div>
+    <div class="bottom-note">NK세포는 학습 없이 즉각 암세포를 공격하기 때문에<br><strong>암의 초기 단계에서 가장 중요한 면역세포</strong>로 꼽힙니다.</div>
+  </div>
+
+  <!-- ====== Scene 5: 떨어지면 ====== -->
+  <div class="scene scene-5" id="scene-5">
+    <!-- 배경 바이러스/암세포 패턴 -->
+    <svg class="bg-cells" viewBox="0 0 400 700" fill="none">
+      <!-- 암세포 1 -->
+      <g transform="translate(40, 80)">
+        <path d="M40,45 Q45,10 65,25 Q85,10 82,40 Q100,48 85,65 Q90,88 68,82 Q55,95 42,80 Q22,90 25,65 Q5,58 20,45 Q10,25 35,30 Z" fill="#7c3aed" opacity="1"/>
+        <circle cx="55" cy="52" r="16" fill="#6d28d9" opacity="0.6"/>
+        <circle cx="50" cy="48" r="5" fill="#4c1d95" opacity="0.4"/>
+      </g>
+      <!-- 암세포 2 -->
+      <g transform="translate(280, 160)">
+        <path d="M35,38 Q38,8 55,22 Q72,8 70,35 Q88,42 74,56 Q78,78 58,72 Q48,82 38,70 Q20,78 22,56 Q4,50 18,40 Q10,22 30,26 Z" fill="#7c3aed" opacity="1"/>
+        <circle cx="46" cy="44" r="13" fill="#6d28d9" opacity="0.5"/>
+      </g>
+      <!-- 바이러스 1 - 코로나 형태 -->
+      <g transform="translate(160, 340)">
+        <circle cx="45" cy="45" r="30" fill="#8b5cf6" opacity="0.8"/>
+        <circle cx="45" cy="45" r="18" fill="#7c3aed" opacity="0.6"/>
+        <!-- 스파이크 단백질들 -->
+        <line x1="45" y1="15" x2="45" y2="4" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="45" cy="2" r="3" fill="#a78bfa"/>
+        <line x1="72" y1="30" x2="80" y2="24" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="82" cy="22" r="3" fill="#a78bfa"/>
+        <line x1="72" y1="60" x2="80" y2="66" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="82" cy="68" r="3" fill="#a78bfa"/>
+        <line x1="45" y1="75" x2="45" y2="86" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="45" cy="88" r="3" fill="#a78bfa"/>
+        <line x1="18" y1="60" x2="10" y2="66" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="8" cy="68" r="3" fill="#a78bfa"/>
+        <line x1="18" y1="30" x2="10" y2="24" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="8" cy="22" r="3" fill="#a78bfa"/>
+        <line x1="24" y1="18" x2="18" y2="10" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="16" cy="8" r="2.5" fill="#a78bfa"/>
+        <line x1="66" y1="18" x2="72" y2="10" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="74" cy="8" r="2.5" fill="#a78bfa"/>
+      </g>
+      <!-- 암세포 3 -->
+      <g transform="translate(20, 480)">
+        <path d="M30,32 Q33,6 48,18 Q60,6 58,28 Q74,34 62,46 Q66,64 50,58 Q42,68 34,58 Q18,64 20,48 Q4,42 16,34 Q8,18 26,22 Z" fill="#7c3aed" opacity="1"/>
+        <circle cx="40" cy="38" r="11" fill="#6d28d9" opacity="0.5"/>
+      </g>
+      <!-- 바이러스 2 -->
+      <g transform="translate(300, 440)">
+        <circle cx="35" cy="35" r="24" fill="#8b5cf6" opacity="0.7"/>
+        <circle cx="35" cy="35" r="14" fill="#7c3aed" opacity="0.5"/>
+        <line x1="35" y1="11" x2="35" y2="2" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="35" cy="0" r="2.5" fill="#a78bfa"/>
+        <line x1="56" y1="22" x2="63" y2="16" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="65" cy="14" r="2.5" fill="#a78bfa"/>
+        <line x1="59" y1="35" x2="68" y2="35" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="70" cy="35" r="2.5" fill="#a78bfa"/>
+        <line x1="56" y1="48" x2="63" y2="54" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="65" cy="56" r="2.5" fill="#a78bfa"/>
+        <line x1="35" y1="59" x2="35" y2="68" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="35" cy="70" r="2.5" fill="#a78bfa"/>
+        <line x1="14" y1="48" x2="7" y2="54" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="5" cy="56" r="2.5" fill="#a78bfa"/>
+        <line x1="11" y1="35" x2="2" y2="35" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="0" cy="35" r="2.5" fill="#a78bfa"/>
+        <line x1="14" y1="22" x2="7" y2="16" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="5" cy="14" r="2.5" fill="#a78bfa"/>
+      </g>
+      <!-- 작은 암세포 -->
+      <g transform="translate(320, 580)">
+        <path d="M20,22 Q22,5 32,14 Q42,5 40,20 Q50,24 42,32 Q45,45 35,40 Q28,48 22,40 Q12,45 14,34 Q2,30 10,24 Q6,12 18,16 Z" fill="#7c3aed" opacity="0.9"/>
+      </g>
+      <g transform="translate(120, 580)">
+        <circle cx="20" cy="20" r="16" fill="#8b5cf6" opacity="0.7"/>
+        <circle cx="20" cy="20" r="9" fill="#7c3aed" opacity="0.5"/>
+        <line x1="20" y1="4" x2="20" y2="0" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="20" cy="-1" r="2" fill="#a78bfa"/>
+        <line x1="34" y1="12" x2="38" y2="8" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="39" cy="7" r="2" fill="#a78bfa"/>
+        <line x1="34" y1="28" x2="38" y2="32" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="39" cy="33" r="2" fill="#a78bfa"/>
+        <line x1="20" y1="36" x2="20" y2="40" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="20" cy="41" r="2" fill="#a78bfa"/>
+        <line x1="6" y1="28" x2="2" y2="32" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="1" cy="33" r="2" fill="#a78bfa"/>
+        <line x1="6" y1="12" x2="2" y2="8" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="1" cy="7" r="2" fill="#a78bfa"/>
+      </g>
+    </svg>
+    <div class="heading"><em>NK세포</em>가<br>떨어지면 생기는 일</div>
+    <div class="warning-content">
+      <p>NK세포의 활성도가 떨어지면 암세포를 초기에 제거하지 못해 <strong style="color:#dc2626">체내에서 암이 자랄 가능성</strong>이 높아집니다.</p>
+      <p>실제로 여러 연구에서 암 환자군은 정상군보다 NK세포 활성도가 낮게 나타났습니다.</p>
+    </div>
+    <div class="danger-meter">
+      <div class="danger-fill"></div>
+    </div>
+    <div class="meter-labels">
+      <span>정상</span>
+      <span>관심</span>
+      <span>경계</span>
+      <span>이상</span>
+    </div>
+    <div class="question-prompt">그렇다면 내 NK세포의 활성도는 어떻게 확인할까요?</div>
+    <div class="source">출처: 하이닥 뉴스 인문기사 '면역력의 지표, NK세포 활성도 중요하다'(2017)</div>
+  </div>
+
+  <!-- ====== Scene 6: 활성도 검사 ====== -->
+  <div class="scene scene-6" id="scene-6">
+    <!-- 상단 혈액검사 일러스트 -->
+    <svg class="test-illust" viewBox="0 0 200 80" fill="none">
+      <!-- 시험관 -->
+      <rect x="30" y="10" width="22" height="55" rx="10" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+      <rect x="32" y="34" width="18" height="29" rx="8" fill="#ef4444" opacity="0.6"/>
+      <rect x="32" y="44" width="18" height="19" rx="8" fill="#dc2626" opacity="0.5"/>
+      <rect x="27" y="8" width="28" height="5" rx="2" fill="rgba(255,255,255,0.4)"/>
+      <!-- 눈금 -->
+      <line x1="54" y1="20" x2="58" y2="20" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <line x1="54" y1="30" x2="58" y2="30" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <line x1="54" y1="40" x2="58" y2="40" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <line x1="54" y1="50" x2="58" y2="50" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+      <!-- 돋보기 / 현미경 -->
+      <circle cx="110" cy="32" r="20" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+      <circle cx="110" cy="32" r="15" fill="rgba(255,255,255,0.08)"/>
+      <line x1="125" y1="47" x2="140" y2="62" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round"/>
+      <!-- 돋보기 안 NK세포 -->
+      <circle cx="110" cy="32" r="8" fill="#7ec8ff" opacity="0.7"/>
+      <circle cx="110" cy="24" r="3" fill="#5bb8f5" opacity="0.7"/>
+      <circle cx="117" cy="28" r="3" fill="#5bb8f5" opacity="0.7"/>
+      <circle cx="118" cy="36" r="3" fill="#5bb8f5" opacity="0.7"/>
+      <circle cx="112" cy="41" r="3" fill="#5bb8f5" opacity="0.7"/>
+      <circle cx="103" cy="38" r="3" fill="#5bb8f5" opacity="0.7"/>
+      <circle cx="102" cy="28" r="3" fill="#5bb8f5" opacity="0.7"/>
+      <!-- 체크 표시 -->
+      <circle cx="160" cy="30" r="14" fill="rgba(255,255,255,0.15)"/>
+      <path d="M152,30 L158,36 L170,24" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <div class="top-label">내 면역력, 미리 확인해보세요!</div>
+    <div class="heading">NK세포 활성도 검사</div>
+    <div class="level-table">
+      <div class="level-row">
+        <div class="level-label">이상 구간</div>
+        <div class="level-detail"><span class="val">*100 미만</span>NK세포의 활성이 매우 낮은 상태</div>
+      </div>
+      <div class="level-row">
+        <div class="level-label">경계 구간</div>
+        <div class="level-detail"><span class="val">*100~250 미만</span>NK세포의 활성이 정상인 보다 낮은 상태</div>
+      </div>
+      <div class="level-row">
+        <div class="level-label">관심 구간</div>
+        <div class="level-detail"><span class="val">*250~500 미만</span>상대적으로 면역력이 저하된 상태</div>
+      </div>
+      <div class="level-row">
+        <div class="level-label">정상 구간</div>
+        <div class="level-detail"><span class="val">*500 이상</span>NK세포의 면역기능이 이상적인 상태</div>
+      </div>
+    </div>
+    <div class="table-note">NK세포 활성도 검사는 혈액 검사를 통해 체내<br>NK세포가 암세포를 얼마나 효과적으로 공격할 수 있는지를<br>수치로 확인하는 검사입니다.</div>
+  </div>
+
+  <!-- ====== Scene 7: 관리법 ====== -->
+  <div class="scene scene-7" id="scene-7">
+    <div class="heading"><span>NK세포</span>는<br>관리할 수 있을까?</div>
+    <div class="body-text">NK세포 활성은 충분한 수면, 규칙적인 신체 활동,<br>균형 잡힌 식습관, 스트레스 관리 등<br>생활 습관 개선을 통해 유지될 수 있습니다.</div>
+    <div class="manage-grid">
+      <div class="manage-item">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
+            <rect x="6" y="22" width="36" height="18" rx="4" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/>
+            <path d="M6,26 Q24,18 42,26" fill="#c7d2fe"/>
+            <circle cx="24" cy="18" r="7" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+            <path d="M19,16 Q24,12 29,16" stroke="#f59e0b" stroke-width="1" fill="none"/>
+            <line x1="22" y1="19" x2="22" y2="20" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+            <line x1="26" y1="19" x2="26" y2="20" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="label">충분한 수면</div>
+      </div>
+      <div class="manage-item">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
+            <circle cx="24" cy="11" r="5" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.5"/>
+            <path d="M24,16 L24,28" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+            <path d="M24,28 L18,38" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+            <path d="M24,28 L32,36" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+            <path d="M24,20 L16,14" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+            <path d="M24,20 L34,18" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="label">규칙적 운동</div>
+      </div>
+      <div class="manage-item">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
+            <ellipse cx="24" cy="34" rx="14" ry="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.2"/>
+            <circle cx="18" cy="24" r="5" fill="#fb923c" stroke="#ea580c" stroke-width="1"/>
+            <circle cx="28" cy="22" r="4" fill="#f87171" stroke="#dc2626" stroke-width="1"/>
+            <ellipse cx="24" cy="30" rx="6" ry="3" fill="#86efac" stroke="#16a34a" stroke-width="1"/>
+            <path d="M22,28 Q24,26 26,28" stroke="#15803d" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <div class="label">균형 잡힌 식단</div>
+      </div>
+      <div class="manage-item">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
+            <circle cx="24" cy="14" r="5" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/>
+            <path d="M24,19 L24,30" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16,36 L24,30 L32,36" stroke="#6366f1" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M18,25 L14,22" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M30,25 L34,22" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- 평온함 표현 -->
+            <path d="M10,12 Q12,8 14,12" stroke="#a5b4fc" stroke-width="1" fill="none" opacity="0.6"/>
+            <path d="M34,10 Q36,6 38,10" stroke="#a5b4fc" stroke-width="1" fill="none" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="label">스트레스 관리</div>
+      </div>
+    </div>
+    <div class="closing-text">일상 속 면역 관리가 장기적인 암 예방에 중요한 이유입니다.</div>
+  </div>
+
+  <!-- ====== Scene 8: Outro ====== -->
+  <div class="scene scene-8" id="scene-8">
+    <!-- 방패 + NK세포 보호 일러스트 -->
+    <svg class="shield-illust" viewBox="0 0 180 200" fill="none">
+      <!-- 방패 -->
+      <path d="M90,10 L160,40 L155,120 Q150,170 90,190 Q30,170 25,120 L20,40 Z" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" opacity="0.9"/>
+      <path d="M90,25 L145,50 L141,115 Q137,158 90,175 Q43,158 39,115 L35,50 Z" fill="#bbf7d0" opacity="0.6"/>
+      <!-- 방패 안 NK세포 -->
+      <g transform="translate(60, 65)">
+        <circle cx="30" cy="35" r="26" fill="#7ec8ff"/>
+        <circle cx="30" cy="11" r="7" fill="#5bb8f5"/>
+        <circle cx="52" cy="21" r="7" fill="#5bb8f5"/>
+        <circle cx="54" cy="43" r="7" fill="#5bb8f5"/>
+        <circle cx="42" cy="58" r="7" fill="#5bb8f5"/>
+        <circle cx="22" cy="62" r="7" fill="#5bb8f5"/>
+        <circle cx="6" cy="48" r="7" fill="#5bb8f5"/>
+        <circle cx="6" cy="26" r="7" fill="#5bb8f5"/>
+        <circle cx="16" cy="14" r="7" fill="#5bb8f5"/>
+        <circle cx="30" cy="35" r="14" fill="#4aa8e8"/>
+        <circle cx="27" cy="32" r="4" fill="#3b93d0"/>
+        <circle cx="34" cy="38" r="3" fill="#3b93d0"/>
+      </g>
+      <!-- 체크 마크 -->
+      <circle cx="140" cy="45" r="14" fill="#16a34a" opacity="0.8"/>
+      <path d="M132,45 L138,51 L150,39" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- 보호 광선 효과 -->
+      <line x1="90" y1="5" x2="90" y2="-5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+      <line x1="60" y1="12" x2="54" y2="4" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+      <line x1="120" y1="12" x2="126" y2="4" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+    </svg>
+    <div class="outro-heading">결국, 암을 막는 힘은</div>
+    <div class="outro-highlight">미리 알고, 미리 지키는 것</div>
+    <div class="outro-body">NK세포는 암이 생긴 뒤보다 생기기 전과 치료 이후에<br>더 중요해지는 면역 방어선입니다.<br><br>암을 대비한다는 건 치료만이 아니라<br><strong style="color:#16a34a">면역과 삶 전체를 준비하는 일</strong>입니다.</div>
+    <div class="outro-cta">교보라플이 여러분의 건강한 일상을 응원할게요!</div>
+    <div class="brand">KYOBO 라플</div>
+  </div>
+
+  <div class="watermark">KYOBO 라플</div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="progress-bar" id="progressBar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="controls-row">
+      <button class="btn-play" id="btnPlay">&#9654;</button>
+      <div class="time-display"><span id="timeCurrent">0:00</span> / <span id="timeTotal">0:40</span></div>
+      <div class="scene-indicator" id="sceneDots"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const TOTAL_DURATION = 40;
+const SCENES = [
+  { id: 1, start: 0,  end: 5 },
+  { id: 2, start: 5,  end: 10 },
+  { id: 3, start: 10, end: 15 },
+  { id: 4, start: 15, end: 20 },
+  { id: 5, start: 20, end: 25 },
+  { id: 6, start: 25, end: 30 },
+  { id: 7, start: 30, end: 35 },
+  { id: 8, start: 35, end: 40 },
+];
+
+let isPlaying = false;
+let currentTime = 0;
+let currentScene = -1;
+let animFrame = null;
+let lastTimestamp = null;
+
+const btnPlay = document.getElementById('btnPlay');
+const progressFill = document.getElementById('progressFill');
+const progressBar = document.getElementById('progressBar');
+const timeCurrent = document.getElementById('timeCurrent');
+const sceneDots = document.getElementById('sceneDots');
+
+// Floating cells for scene 1
+const floatingCells = document.getElementById('floatingCells');
+function createFloatingCell() {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  const size = 16 + Math.random() * 24;
+  svg.setAttribute('width', size);
+  svg.setAttribute('height', size);
+  svg.setAttribute('viewBox', '0 0 40 40');
+  svg.style.position = 'absolute';
+  svg.style.left = Math.random() * 100 + '%';
+  svg.style.bottom = '-10%';
+  svg.style.opacity = '0.15';
+  svg.style.animation = `floatUp ${8 + Math.random() * 8}s linear forwards`;
+  svg.style.animationDelay = Math.random() * 6 + 's';
+  svg.innerHTML = '<circle cx="20" cy="20" r="14" fill="#7ec8ff"/><circle cx="20" cy="8" r="4" fill="#5bb8f5"/><circle cx="30" cy="14" r="4" fill="#5bb8f5"/><circle cx="30" cy="26" r="4" fill="#5bb8f5"/><circle cx="22" cy="34" r="4" fill="#5bb8f5"/><circle cx="12" cy="30" r="4" fill="#5bb8f5"/><circle cx="10" cy="16" r="4" fill="#5bb8f5"/>';
+  floatingCells.appendChild(svg);
+  setTimeout(() => svg.remove(), 18000);
+}
+for (let i = 0; i < 8; i++) createFloatingCell();
+setInterval(() => { if (currentScene === 0) createFloatingCell(); }, 2500);
+
+// Scene dots
+SCENES.forEach((s, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'scene-dot' + (i === 0 ? ' active' : '');
+  dot.dataset.index = i;
+  sceneDots.appendChild(dot);
+});
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+
+function animateScene(sceneId) {
+  const el = document.getElementById('scene-' + sceneId);
+  if (!el) return;
+
+  switch(sceneId) {
+    case 1: {
+      el.querySelector('.cell-cluster').style.cssText = 'opacity:0;transform:translateX(-50%) scale(0.9);';
+      el.querySelector('.cell-cluster').className = 'cell-cluster anim-fade-in delay-1';
+      el.querySelector('.subtitle').className = 'subtitle anim-fade-up delay-2';
+      el.querySelector('.title-main').className = 'title-main anim-fade-up delay-3';
+      el.querySelector('.line-accent').className = 'line-accent anim-width delay-4';
+      break;
+    }
+    case 2: {
+      el.querySelector('.cell-bg-top').className = 'cell-bg-top anim-fade-in delay-1';
+      el.querySelector('.cell-illust').className = 'cell-illust anim-fade-scale delay-1';
+      el.querySelector('.heading').className = 'heading anim-fade-up delay-2';
+      el.querySelector('.body-text').className = 'body-text anim-fade-up delay-3';
+      el.querySelector('.highlight-box').className = 'highlight-box anim-fade-left delay-4';
+      el.querySelector('.footnote').className = 'footnote anim-fade-in delay-5';
+      break;
+    }
+    case 3: {
+      el.querySelector('.heading').className = 'heading anim-fade-up delay-1';
+      el.querySelector('.attack-visual').className = 'attack-visual anim-fade-scale delay-2';
+      el.querySelectorAll('.mech-step').forEach((s, i) => {
+        s.className = 'mech-step anim-fade-left delay-' + (i + 3);
+      });
+      el.querySelector('.important-note').className = 'important-note anim-fade-scale delay-6';
+      break;
+    }
+    case 4: {
+      el.querySelector('.heading').className = 'heading anim-fade-scale delay-1';
+      el.querySelector('.sub-question').className = 'sub-question anim-fade-in delay-2';
+      el.querySelectorAll('.cell-card').forEach((c, i) => {
+        c.className = 'cell-card anim-fade-up delay-' + (i + 2);
+      });
+      el.querySelector('.bottom-note').className = 'bottom-note anim-fade-up delay-5';
+      break;
+    }
+    case 5: {
+      el.querySelector('.heading').className = 'heading anim-fade-left delay-1';
+      el.querySelector('.warning-content').className = 'warning-content anim-fade-up delay-2';
+      const meter = el.querySelector('.danger-meter');
+      meter.className = 'danger-meter anim-fade-in delay-3';
+      el.querySelector('.meter-labels').className = 'meter-labels anim-fade-in delay-3';
+      el.querySelector('.question-prompt').className = 'question-prompt anim-fade-up delay-4';
+      el.querySelector('.source').className = 'source anim-fade-in delay-5';
+      setTimeout(() => { el.querySelector('.danger-fill').style.width = '85%'; }, 1200);
+      break;
+    }
+    case 6: {
+      el.querySelector('.test-illust').className = 'test-illust anim-fade-scale delay-1';
+      el.querySelector('.top-label').className = 'top-label anim-fade-in delay-1';
+      el.querySelector('.heading').className = 'heading anim-fade-up delay-2';
+      el.querySelectorAll('.level-row').forEach((r, i) => {
+        r.className = 'level-row anim-fade-right delay-' + (i + 3);
+      });
+      el.querySelector('.table-note').className = 'table-note anim-fade-up delay-6';
+      break;
+    }
+    case 7: {
+      el.querySelector('.heading').className = 'heading anim-fade-up delay-1';
+      el.querySelector('.body-text').className = 'body-text anim-fade-up delay-2';
+      el.querySelectorAll('.manage-item').forEach((item, i) => {
+        item.className = 'manage-item anim-fade-scale delay-' + (i + 3);
+      });
+      el.querySelector('.closing-text').className = 'closing-text anim-fade-up delay-6';
+      break;
+    }
+    case 8: {
+      el.querySelector('.shield-illust').className = 'shield-illust anim-fade-scale delay-1';
+      el.querySelector('.outro-heading').className = 'outro-heading anim-fade-up delay-2';
+      el.querySelector('.outro-highlight').className = 'outro-highlight anim-fade-up delay-3';
+      el.querySelector('.outro-body').className = 'outro-body anim-fade-up delay-4';
+      el.querySelector('.outro-cta').className = 'outro-cta anim-fade-up delay-5';
+      el.querySelector('.brand').className = 'brand anim-fade-in delay-6';
+      break;
+    }
+  }
+}
+
+function resetSceneAnimations(sceneId) {
+  const el = document.getElementById('scene-' + sceneId);
+  if (!el) return;
+  const animEls = el.querySelectorAll('[class*="anim-"]');
+  animEls.forEach(a => {
+    const base = a.className.replace(/anim-[\w-]+/g, '').replace(/delay-\d/g, '').trim();
+    a.className = base;
+    // inline opacity 대신 CSS 초기값(opacity:0)에 의존
+    a.style.removeProperty('opacity');
+  });
+  if (sceneId === 5) {
+    const fill = el.querySelector('.danger-fill');
+    if (fill) fill.style.width = '0';
+  }
+}
+
+function switchScene(newSceneIndex) {
+  if (newSceneIndex === currentScene) return;
+  document.querySelectorAll('.scene').forEach(s => {
+    s.classList.remove('active', 'anim-scene');
+  });
+  if (currentScene >= 0) resetSceneAnimations(SCENES[currentScene].id);
+  currentScene = newSceneIndex;
+  const scene = SCENES[currentScene];
+  const el = document.getElementById('scene-' + scene.id);
+  el.classList.add('active', 'anim-scene');
+  setTimeout(() => animateScene(scene.id), 100);
+  document.querySelectorAll('.scene-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === currentScene);
+  });
+}
+
+function tick(timestamp) {
+  if (!isPlaying) return;
+  if (!lastTimestamp) lastTimestamp = timestamp;
+  const delta = (timestamp - lastTimestamp) / 1000;
+  lastTimestamp = timestamp;
+  currentTime = Math.min(currentTime + delta, TOTAL_DURATION);
+
+  const pct = (currentTime / TOTAL_DURATION) * 100;
+  progressFill.style.width = pct + '%';
+  timeCurrent.textContent = formatTime(currentTime);
+
+  for (let i = 0; i < SCENES.length; i++) {
+    if (currentTime >= SCENES[i].start && currentTime < SCENES[i].end) {
+      switchScene(i);
+      break;
+    }
+  }
+
+  if (currentTime >= TOTAL_DURATION) {
+    isPlaying = false;
+    btnPlay.innerHTML = '&#10227;';
+    lastTimestamp = null;
+    return;
+  }
+  animFrame = requestAnimationFrame(tick);
+}
+
+function play() {
+  if (currentTime >= TOTAL_DURATION) {
+    currentTime = 0;
+    currentScene = -1;
+  }
+  isPlaying = true;
+  lastTimestamp = null;
+  btnPlay.innerHTML = '&#9208;';
+  animFrame = requestAnimationFrame(tick);
+}
+
+function pause() {
+  isPlaying = false;
+  lastTimestamp = null;
+  btnPlay.innerHTML = '&#9654;';
+  if (animFrame) cancelAnimationFrame(animFrame);
+}
+
+btnPlay.addEventListener('click', () => {
+  if (isPlaying) pause(); else play();
+});
+
+progressBar.addEventListener('click', (e) => {
+  const rect = progressBar.getBoundingClientRect();
+  const ratio = (e.clientX - rect.left) / rect.width;
+  currentTime = ratio * TOTAL_DURATION;
+  currentScene = -1;
+  progressFill.style.width = (ratio * 100) + '%';
+  timeCurrent.textContent = formatTime(currentTime);
+  for (let i = 0; i < SCENES.length; i++) {
+    if (currentTime >= SCENES[i].start && currentTime < SCENES[i].end) {
+      switchScene(i);
+      break;
+    }
+  }
+});
+
+switchScene(0);
+</script>
+</body>
+</html>

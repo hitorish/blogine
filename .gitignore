@@ -1,0 +1,11 @@
+node_modules/
+sessions/
+output/
+*.log
+.DS_Store
+.env
+.env.local
+
+# WIP folders (uncomment to include in repo)
+new_work/
+new_work_2/

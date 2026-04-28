@@ -1,0 +1,85 @@
+/* ===================== SCENE 8 - Outro (11초) ===================== */
+.scene-8 {
+  background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%);
+  padding-left: 5%;
+  padding-right: 5%;
+  text-align: center;
+  overflow: hidden;
+  gap: 8px;
+}
+
+.scene-8 .shield-illust {
+  position: absolute;
+  width: 90%;
+  max-width: 600px;
+  opacity: 0;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.scene-8 .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(240,253,244,0.7) 0%, rgba(220,252,231,0.75) 50%, rgba(240,253,244,0.7) 100%);
+  z-index: 2;
+}
+
+.scene-8 .outro-heading {
+  font-size: clamp(48px, 11.4vw, 74px);
+  font-weight: 900;
+  color: #111;
+  line-height: 1.3;
+  margin-bottom: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  position: relative;
+  z-index: 3;
+}
+
+.scene-8 .outro-highlight {
+  font-size: clamp(55px, 13.2vw, 89px);
+  font-weight: 900;
+  color: var(--kyobo-green);
+  margin-top: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+  position: relative;
+  z-index: 3;
+}
+
+.scene-8 .outro-body {
+  font-size: clamp(31px, 6.6vw, 46px);
+  color: var(--text-dark);
+  font-weight: 500;
+  margin-top: 180px;
+  line-height: 1.7;
+  opacity: 0;
+  transform: translateY(20px);
+  position: relative;
+  z-index: 3;
+}
+
+.scene-8 .outro-cta {
+  font-size: clamp(28px, 6vw, 42px);
+  color: var(--kyobo-green-dark);
+  font-weight: 700;
+  margin-top: 160px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(15px);
+  position: relative;
+  z-index: 3;
+}
+
+.scene-8 .brand {
+  margin-top: 16px;
+  font-size: clamp(31px, 6.6vw, 43px);
+  color: var(--text-light);
+  letter-spacing: 4px;
+  font-weight: 500;
+  opacity: 0;
+  position: relative;
+  z-index: 3;
+}

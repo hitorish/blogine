@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NK세포 - 암 잡는 면역세포 v5</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/scene-1.css">
+<link rel="stylesheet" href="css/scene-2.css">
+<link rel="stylesheet" href="css/scene-3.css">
+<link rel="stylesheet" href="css/scene-4.css">
+<link rel="stylesheet" href="css/scene-5.css">
+<link rel="stylesheet" href="css/scene-6.css">
+<link rel="stylesheet" href="css/scene-7.css">
+<link rel="stylesheet" href="css/scene-8.css">
+<link rel="stylesheet" href="css/scene-9.css">
+</head>
+<body>
+
+<div class="player-wrapper" id="player">
+
+  <!-- ====== Scene 1: Intro (6초) ====== -->
+  <div class="scene scene-1 active" id="scene-1">
+    <img class="bg-photo" src="../assets/images/image_01.jpg" alt="">
+    <div class="title-main">암 잡는<br><span>NK세포</span>의 정체</div>
+    <div class="subtitle">우리 몸의 건강 방어선</div>
+    <div class="line-accent"></div>
+  </div>
+
+  <!-- ====== Scene 2: NK세포란? (11초) ====== -->
+  <div class="scene scene-2 extended" id="scene-2">
+    <div class="heading"><span>NK세포</span>란 무엇일까?</div>
+    <div class="video-wrap">
+      <video class="character-video" src="../assets/images/scene_2/mk_cell_walk.mp4" autoplay muted loop playsinline></video>
+    </div>
+    <div class="body-text">NK세포(Natural Killer Cell)는<br>선천면역을 담당하는 면역세포로,<br><strong style="color:#059669" class="text-highlight">바이러스 감염 세포나 암세포를<br>빠르게 인식해 직접 사멸</strong>시킵니다.</div>
+    <div class="highlight-box">항체나 기억 면역 없이도 즉각 반응하는 것이 가장 큰 특징입니다.</div>
+    <div class="footnote">*자연살해세포(Natural Killer Cell)</div>
+  </div>
+
+  <!-- ====== Scene 3: 퍼포린/그랜자임 (11초) ====== -->
+  <div class="scene scene-3 extended" id="scene-3">
+    <div class="heading">왜 NK세포를<br><span>'암을 잡는 세포'</span>라 부를까</div>
+    <div class="char-area">
+      <img class="char-cancer" src="../assets/images/scene_3/cancer_cell.png" alt="암세포 캐릭터">
+      <img class="char-nk" src="../assets/images/scene_3/nk_cell.png" alt="NK세포 캐릭터">
+    </div>
+    <div class="mechanism-box">
+      <div class="mech-step">
+        <div class="step-num">1</div>
+        <div class="step-text">암세포 표면의 <strong class="text-highlight">이상 신호 감지</strong></div>
+      </div>
+      <div class="mech-step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong class="text-highlight">퍼포린</strong>으로 암세포 막에 구멍 형성</div>
+      </div>
+      <div class="mech-step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong class="text-highlight">그랜자임</strong> 주입으로 직접 파괴</div>
+      </div>
+    </div>
+    <div class="important-note">암세포가 성장하기 전, 초기 단계에서 특히 중요!</div>
+  </div>
+
+  <!-- ====== Scene 4: vs 다른 면역세포 (11초) ====== -->
+  <div class="scene scene-4 extended" id="scene-4">
+    <div class="heading">NK세포 vs 다른 면역세포</div>
+    <div class="sub-question">NK세포는 뭐가 다를까?</div>
+    <div class="cards-row">
+      <div class="cell-card">
+        <svg class="cell-visual" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="26" fill="#1a1a2e" opacity="0.85"/>
+          <circle cx="32" cy="32" r="22" fill="#16213e"/>
+          <circle cx="28" cy="28" r="10" fill="#0f3460" opacity="0.7"/>
+          <circle cx="36" cy="36" r="7" fill="#0f3460" opacity="0.5"/>
+          <circle cx="32" cy="32" r="26" stroke="#533483" stroke-width="1.5" opacity="0.6"/>
+        </svg>
+        <div class="cell-name">T세포</div>
+        <div class="cell-desc">학습·기억<br>후 공격</div>
+      </div>
+      <div class="cell-card">
+        <svg class="cell-visual" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="24" fill="#1e3a5f"/>
+          <circle cx="32" cy="32" r="18" fill="#2563eb" opacity="0.4"/>
+          <circle cx="26" cy="28" r="6" fill="#3b82f6" opacity="0.5"/>
+          <circle cx="38" cy="34" r="5" fill="#3b82f6" opacity="0.4"/>
+          <circle cx="32" cy="32" r="24" stroke="#60a5fa" stroke-width="1" opacity="0.5"/>
+        </svg>
+        <div class="cell-name">B세포</div>
+        <div class="cell-desc">학습·기억<br>후 항체 생성</div>
+      </div>
+      <div class="cell-card">
+        <svg class="cell-visual" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="20" fill="#7ec8ff"/>
+          <circle cx="32" cy="12" r="6" fill="#5bb8f5"/>
+          <circle cx="50" cy="24" r="6" fill="#5bb8f5"/>
+          <circle cx="50" cy="42" r="6" fill="#5bb8f5"/>
+          <circle cx="38" cy="54" r="6" fill="#5bb8f5"/>
+          <circle cx="22" cy="52" r="6" fill="#5bb8f5"/>
+          <circle cx="14" cy="38" r="6" fill="#5bb8f5"/>
+          <circle cx="16" cy="22" r="6" fill="#5bb8f5"/>
+          <circle cx="32" cy="32" r="11" fill="#4aa8e8"/>
+        </svg>
+        <div class="cell-name">NK세포</div>
+        <div class="cell-desc">학습 없이<br><b style="color:#059669">즉각 공격</b></div>
+      </div>
+    </div>
+    <div class="battle-area">
+      <img class="battle-img" src="../assets/images/scene_4/KakaoTalk_20260407_153711868_02.png" alt="NK세포 박치기">
+    </div>
+    <div class="bottom-note">NK세포는 학습 없이<br>즉각 암세포를 공격하기 때문에<br><strong>암의 초기 단계에서 가장 중요한<br>면역세포</strong>로 꼽힙니다.</div>
+  </div>
+
+  <!-- ====== Scene 5: 떨어지면 (11초) ====== -->
+  <div class="scene scene-5 extended" id="scene-5">
+    <img class="nk-dizzy" src="../assets/images/scene_5/KakaoTalk_20260407_153711868_03.png" alt="NK세포 힘든 모습">
+    <div class="heading"><em>NK세포</em>가<br>떨어지면 생기는 일</div>
+    <div class="warning-content">
+      <p>NK세포의 활성도가 떨어지면<br>암세포를 초기에 제거하지 못해<br><strong style="color:#dc2626" class="text-highlight">체내에서 암이 자랄 가능성</strong>이 높아집니다.</p>
+    </div>
+    <div class="danger-meter">
+      <div class="danger-fill"></div>
+    </div>
+    <div class="meter-labels">
+      <span>정상</span>
+      <span>관심</span>
+      <span>경계</span>
+      <span>이상</span>
+    </div>
+    <div class="warning-content" style="margin-top:8px;">
+      <p style="font-size:clamp(28px, 6vw, 40px);">실제로 여러 연구에서 암 환자군은 정상군보다<br>NK세포 활성도가 낮게 나타났습니다.</p>
+    </div>
+    <div class="question-prompt">그렇다면 내 NK세포의 활성도는 어떻게 확인할까요?</div>
+    <div class="source">출처: 하이닥 뉴스 '면역력의 지표, NK세포 활성도 중요하다'(2017)</div>
+  </div>
+
+  <!-- ====== Scene 6: 활성도 검사 (13초) ====== -->
+  <div class="scene scene-6" id="scene-6">
+    <div class="top-label">내 면역력, 미리 확인해보세요!</div>
+    <div class="heading">NK세포 활성도 검사</div>
+    <div class="level-table">
+      <div class="level-row">
+        <div class="level-label">이상 구간</div>
+        <div class="level-detail"><span class="val">*100 미만</span>NK세포의 활성이 매우 낮은 상태</div>
+      </div>
+      <div class="level-row">
+        <div class="level-label">경계 구간</div>
+        <div class="level-detail"><span class="val">*100~250 미만</span>NK세포 활성이 정상보다 낮은 상태</div>
+      </div>
+      <div class="level-row">
+        <div class="level-label">관심 구간</div>
+        <div class="level-detail"><span class="val">*250~500 미만</span>상대적으로 면역력이 저하된 상태</div>
+      </div>
+      <div class="level-row">
+        <div class="level-label">정상 구간</div>
+        <div class="level-detail"><span class="val">*500 이상</span>NK세포의 면역기능이 이상적인 상태</div>
+      </div>
+    </div>
+    <div class="table-note">혈액 검사를 통해 체내 NK세포가 암세포를<br>얼마나 효과적으로 공격할 수 있는지<br>수치로 확인하는 검사입니다.</div>
+  </div>
+
+  <!-- ====== Scene 7: 관리법 (12초) ====== -->
+  <div class="scene scene-7 extended" id="scene-7">
+    <div class="heading"><span>NK세포</span>는<br>관리할 수 있을까?</div>
+    <div class="manage-grid">
+      <div class="manage-item">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 48 48" fill="none" width="46" height="46"><rect x="6" y="22" width="36" height="18" rx="4" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/><path d="M6,26 Q24,18 42,26" fill="#c7d2fe"/><circle cx="24" cy="18" r="7" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/><path d="M19,16 Q24,12 29,16" stroke="#f59e0b" stroke-width="1" fill="none"/></svg>
+        </div>
+        <div class="label">충분한 수면</div>
+      </div>
+      <div class="manage-item">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 48 48" fill="none" width="46" height="46"><circle cx="24" cy="11" r="5" fill="#a7f3d0" stroke="#059669" stroke-width="1.5"/><path d="M24,16 L24,28" stroke="#059669" stroke-width="2" stroke-linecap="round"/><path d="M24,28 L18,38" stroke="#059669" stroke-width="2" stroke-linecap="round"/><path d="M24,28 L32,36" stroke="#059669" stroke-width="2" stroke-linecap="round"/><path d="M24,20 L16,14" stroke="#059669" stroke-width="2" stroke-linecap="round"/><path d="M24,20 L34,18" stroke="#059669" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="label">규칙적 운동</div>
+      </div>
+      <div class="manage-item">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 48 48" fill="none" width="46" height="46"><ellipse cx="24" cy="34" rx="14" ry="8" fill="#d1fae5" stroke="#059669" stroke-width="1.2"/><circle cx="18" cy="24" r="5" fill="#fb923c" stroke="#ea580c" stroke-width="1"/><circle cx="28" cy="22" r="4" fill="#f87171" stroke="#dc2626" stroke-width="1"/><ellipse cx="24" cy="30" rx="6" ry="3" fill="#6ee7b7" stroke="#059669" stroke-width="1"/></svg>
+        </div>
+        <div class="label">균형 잡힌 식단</div>
+      </div>
+      <div class="manage-item">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 48 48" fill="none" width="46" height="46"><circle cx="24" cy="14" r="5" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/><path d="M24,19 L24,30" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/><path d="M16,36 L24,30 L32,36" stroke="#6366f1" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M10,12 Q12,8 14,12" stroke="#a5b4fc" stroke-width="1" fill="none" opacity="0.6"/><path d="M34,10 Q36,6 38,10" stroke="#a5b4fc" stroke-width="1" fill="none" opacity="0.6"/></svg>
+        </div>
+        <div class="label">스트레스 관리</div>
+      </div>
+    </div>
+    <div class="closing-text">일상 속 면역 관리가<br>장기적인 암 예방에 중요한 이유입니다.</div>
+  </div>
+
+  <!-- ====== Scene 8: Outro (11초) ====== -->
+  <div class="scene scene-8" id="scene-8">
+    <div class="overlay"></div>
+    <svg class="shield-illust" viewBox="0 0 180 200" fill="none">
+      <path d="M90,10 L160,40 L155,120 Q150,170 90,190 Q30,170 25,120 L20,40 Z" fill="#d1fae5" stroke="#059669" stroke-width="2.5" opacity="0.9"/>
+      <path d="M90,25 L145,50 L141,115 Q137,158 90,175 Q43,158 39,115 L35,50 Z" fill="#a7f3d0" opacity="0.6"/>
+      <g transform="translate(60, 65)">
+        <circle cx="30" cy="35" r="26" fill="#7ec8ff"/><circle cx="30" cy="11" r="7" fill="#5bb8f5"/><circle cx="52" cy="21" r="7" fill="#5bb8f5"/><circle cx="54" cy="43" r="7" fill="#5bb8f5"/><circle cx="42" cy="58" r="7" fill="#5bb8f5"/><circle cx="22" cy="62" r="7" fill="#5bb8f5"/><circle cx="6" cy="48" r="7" fill="#5bb8f5"/><circle cx="6" cy="26" r="7" fill="#5bb8f5"/><circle cx="16" cy="14" r="7" fill="#5bb8f5"/><circle cx="30" cy="35" r="14" fill="#4aa8e8"/><circle cx="27" cy="32" r="4" fill="#3b93d0"/><circle cx="34" cy="38" r="3" fill="#3b93d0"/>
+      </g>
+      <circle cx="140" cy="45" r="14" fill="#059669" opacity="0.8"/>
+      <path d="M132,45 L138,51 L150,39" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <div class="outro-heading">결국, 암을 막는 힘은</div>
+    <div class="outro-highlight">미리 알고, 미리 지키는 것</div>
+    <div class="outro-body">NK세포는 암이 생긴 뒤보다<br>생기기 전과 치료 이후에<br>더 중요해지는 면역 방어선입니다.<br><br>암을 대비한다는 건 치료만이 아니라<br><strong style="color:#059669">면역과 삶 전체를 준비하는 일</strong>입니다.</div>
+    <div class="outro-cta">교보라플이 여러분의 건강한 일상을 응원할게요!</div>
+    <div class="brand">KYOBO 라플</div>
+  </div>
+
+  <!-- ====== Scene 9: 교보라이프플래닛 (8초) ====== -->
+  <div class="scene scene-9" id="scene-9">
+    <div class="particles" id="particles9"></div>
+    <div class="badge">알뜰보험</div>
+    <div class="main-copy">설계사 수수료 없는<br>알뜰보험</div>
+    <div class="sub-copy">합리적인 보험료의 시작</div>
+    <div class="divider"></div>
+    <img class="brand-logo" src="../assets/images/로고/logo-removebg-preview.png" alt="교보라이프플래닛생명">
+  </div>
+
+  <div class="watermark">KYOBO 라플</div>
+
+  <div class="subtitle-bar" style="display:none;">
+    <div class="subtitle-text" id="subtitleText"></div>
+  </div>
+
+  <div class="controls">
+    <div class="progress-bar" id="progressBar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="controls-row">
+      <button class="btn-play" id="btnPlay">&#9654;</button>
+      <div class="time-display"><span id="timeCurrent">0:00</span> / <span id="timeTotal">2:10</span></div>
+      <div class="scene-indicator" id="sceneDots"></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/player.js"></script>
+</body>
+</html>

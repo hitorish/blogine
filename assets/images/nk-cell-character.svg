@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" width="200" height="220">
+  <defs>
+    <radialGradient id="bodyGrad" cx="45%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#a8e4ff"/>
+      <stop offset="50%" stop-color="#6cc8ff"/>
+      <stop offset="100%" stop-color="#4aa8e8"/>
+    </radialGradient>
+    <radialGradient id="shine" cx="35%" cy="30%" r="40%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#3b93d0" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Legs -->
+  <g>
+    <path d="M72,155 L58,185 Q55,192 60,194 L68,192" stroke="#4aa8e8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M128,155 L138,183 Q141,190 136,193 L128,192" stroke="#4aa8e8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Arms -->
+  <g>
+    <path d="M48,100 L28,85 Q24,82 22,86 L24,92" stroke="#4aa8e8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M152,100 L172,88 Q176,85 178,89 L175,95" stroke="#4aa8e8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Spiky body (8 points) -->
+  <path d="
+    M100,14
+    L118,42 L155,25 L148,65
+    L186,72 L155,100
+    L180,138 L140,135
+    L120,170 L100,145
+    L80,170 L60,135
+    L20,138 L45,100
+    L14,72 L52,65
+    L45,25 L82,42 Z
+  " fill="url(#bodyGrad)" filter="url(#shadow)"/>
+
+  <!-- Body shine overlay -->
+  <path d="
+    M100,14
+    L118,42 L155,25 L148,65
+    L186,72 L155,100
+    L180,138 L140,135
+    L120,170 L100,145
+    L80,170 L60,135
+    L20,138 L45,100
+    L14,72 L52,65
+    L45,25 L82,42 Z
+  " fill="url(#shine)"/>
+
+  <!-- Left eye white -->
+  <ellipse cx="78" cy="88" rx="18" ry="20" fill="#fff"/>
+  <!-- Left pupil -->
+  <ellipse cx="82" cy="92" rx="9" ry="10" fill="#1a1a2e"/>
+  <!-- Left eye shine -->
+  <circle cx="76" cy="85" r="5" fill="#fff"/>
+  <circle cx="86" cy="95" r="2.5" fill="#fff" opacity="0.7"/>
+
+  <!-- Right eye white -->
+  <ellipse cx="122" cy="88" rx="18" ry="20" fill="#fff"/>
+  <!-- Right pupil -->
+  <ellipse cx="126" cy="92" rx="9" ry="10" fill="#1a1a2e"/>
+  <!-- Right eye shine -->
+  <circle cx="120" cy="85" r="5" fill="#fff"/>
+  <circle cx="130" cy="95" r="2.5" fill="#fff" opacity="0.7"/>
+
+  <!-- Eyebrows -->
+  <path d="M62,70 Q78,60 90,68" stroke="#2a5070" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M110,68 Q122,60 138,70" stroke="#2a5070" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+  <!-- Mouth (small surprised 'o') -->
+  <ellipse cx="100" cy="118" rx="7" ry="8" fill="#2a5070"/>
+  <ellipse cx="100" cy="117" rx="4" ry="5" fill="#3d6d8e"/>
+
+  <!-- Cheek blush -->
+  <ellipse cx="60" cy="108" rx="10" ry="6" fill="#ff9ec6" opacity="0.35"/>
+  <ellipse cx="140" cy="108" rx="10" ry="6" fill="#ff9ec6" opacity="0.35"/>
+</svg>

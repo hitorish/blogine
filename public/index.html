@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blogine — blog to short-form video</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+  <header class="hero">
+    <h1>Blogine</h1>
+    <p class="tagline">Turn a blog post into a short-form video.</p>
+  </header>
+
+  <section id="form" class="card">
+    <div class="step">
+      <div class="step-label"><span class="num">1</span> Images</div>
+      <div id="dropzone" class="dropzone">
+        <p class="drop-hint">Drag &amp; drop images, or <span class="link">browse</span></p>
+        <input type="file" id="fileInput" multiple accept="image/*" hidden>
+        <ul id="fileList"></ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <label class="step-label" for="contentText"><span class="num">2</span> Blog content</label>
+      <textarea id="contentText" rows="10" placeholder="Paste the blog post text here..."></textarea>
+    </div>
+
+    <button id="generateBtn" class="primary">Generate video</button>
+  </section>
+
+  <section id="loading" class="card hidden">
+    <div class="spinner"></div>
+    <p class="status">Creating your video…</p>
+    <p class="hint">This usually takes 1–3 minutes.</p>
+    <p id="elapsed" class="elapsed"></p>
+  </section>
+
+  <section id="result" class="card hidden">
+    <div class="phone">
+      <iframe id="resultFrame" allow="autoplay"></iframe>
+    </div>
+    <div class="result-actions">
+      <button id="restartBtn" class="secondary">Make another</button>
+    </div>
+  </section>
+
+  <section id="errorBox" class="card hidden error">
+    <p class="status">Something went wrong.</p>
+    <p id="errorText" class="hint"></p>
+    <button id="retryBtn" class="secondary">Try again</button>
+  </section>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

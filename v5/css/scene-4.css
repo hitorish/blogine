@@ -1,0 +1,101 @@
+/* ===================== SCENE 4 - vs 비교 (11초) ===================== */
+.scene-4 {
+  background: linear-gradient(180deg, #059669, #047857);
+  padding-left: 5%;
+  padding-right: 5%;
+  gap: 10px;
+}
+
+.scene-4 .heading {
+  font-size: clamp(46px, 10vw, 72px);
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 4px;
+  opacity: 0;
+  transform: scale(0.8);
+  white-space: nowrap;
+}
+
+.scene-4 .sub-question {
+  font-size: clamp(38px, 8.4vw, 55px);
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  margin-top: 4px;
+  margin-bottom: 80px;
+  opacity: 0;
+}
+
+.scene-4 .cards-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  width: 90%;
+}
+
+.cell-card {
+  flex: 1;
+  background: rgba(255,255,255,0.92);
+  border-radius: 18px;
+  padding: 20px 8px 18px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(40px);
+  position: relative;
+}
+
+.cell-card .cell-visual {
+  width: 72px; height: 72px;
+  margin: 4px auto 10px;
+}
+
+.cell-card .cell-name {
+  font-weight: 900;
+  font-size: clamp(34px, 7.2vw, 48px);
+  margin-bottom: 4px;
+  color: #111;
+  opacity: 0;
+}
+
+.cell-card .cell-desc {
+  font-size: clamp(26px, 5.8vw, 38px);
+  color: var(--text-sub);
+  font-weight: 500;
+  line-height: 1.5;
+  opacity: 0;
+}
+
+.cell-card:nth-child(3) {
+  border: 3px solid #10b981;
+  box-shadow: 0 0 24px rgba(16,185,129,0.3);
+}
+.cell-card:nth-child(3) .cell-name { color: var(--kyobo-green); }
+
+/* NK세포 박치기 캐릭터 영역 */
+.scene-4 .battle-area {
+  width: 90%;
+  position: relative;
+  margin-top: 10px;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.scene-4 .battle-img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+}
+
+.scene-4 .bottom-note {
+  margin-top: 10px;
+  font-size: clamp(28px, 6vw, 42px);
+  color: rgba(255,255,255,0.95);
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.scene-4 .bottom-note strong { color: #a7f3d0; }
