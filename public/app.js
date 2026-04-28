@@ -259,7 +259,19 @@ function showError(msg) {
   formSection.classList.add('hidden');
   resultSection.classList.add('hidden');
   errorBox.classList.remove('hidden');
-  errorText.textContent = msg;
+  errorText.textContent = sanitizeUserMessage(msg);
+}
+
+// Defense in depth: never let internal tool names leak to the UI.
+// Server-side strings are already sanitized — this catches any
+// network/library error messages that might bubble up.
+function sanitizeUserMessage(msg) {
+  const text = String(msg || '').trim();
+  if (!text) return '잠시 후 다시 시도해주세요.';
+  const scrubbed = text
+    .replace(/\bclaude(\s+code)?\b/gi, '생성기')
+    .replace(/\banthropic\b/gi, '');
+  return scrubbed || '잠시 후 다시 시도해주세요.';
 }
 
 function reset() {

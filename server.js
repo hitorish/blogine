@@ -114,7 +114,7 @@ app.post('/api/session/:id/generate', (req, res) => {
   proc.on('error', (err) => {
     clearTimeout(killTimer);
     session.state = 'error';
-    session.error = `failed to spawn claude: ${err.message}`;
+    session.error = '생성기를 시작할 수 없어요. 잠시 후 다시 시도해주세요.';
     session.finishedAt = Date.now();
     logStream.write(`\nspawn error: ${err.message}\n`);
     logStream.end();
@@ -130,7 +130,7 @@ app.post('/api/session/:id/generate', (req, res) => {
       session.outputUrl = `/sessions/${id}/output/index.html`;
     } else {
       session.state = 'error';
-      session.error = `claude exited ${code} without producing output`;
+      session.error = '결과 파일이 만들어지지 않았어요. 다시 시도해주세요.';
     }
     session.finishedAt = Date.now();
   });
@@ -152,5 +152,4 @@ app.get('/api/session/:id', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Blogine demo listening on http://localhost:${PORT}`);
-  console.log(`Using claude binary: ${CLAUDE_BIN}`);
 });
