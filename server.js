@@ -15,7 +15,7 @@ app.use(express.json({ limit: '2mb' }));
 app.use(express.static(path.join(ROOT, 'public')));
 app.use('/sessions', express.static(path.join(ROOT, 'sessions')));
 app.use('/assets', express.static(path.join(ROOT, 'assets')));
-app.use('/v5', express.static(path.join(ROOT, 'v5')));
+app.use('/template', express.static(path.join(ROOT, 'template')));
 
 const sessions = new Map();
 
@@ -87,7 +87,7 @@ app.post('/api/session/:id/generate', (req, res) => {
     ``,
     `Read sessions/${id}/input/content.txt and sessions/${id}/input/images/, then write the complete output to sessions/${id}/output/.`,
     ``,
-    `Follow CLAUDE.md exactly. Start by copying v5/ to sessions/${id}/output/, then adapt it.`,
+    `Follow CLAUDE.md exactly. Start by copying template/ to sessions/${id}/output/, then adapt it.`,
     ``,
     `When sessions/${id}/output/index.html is ready, write the file sessions/${id}/output/.done with content "ok".`,
   ].join('\n');

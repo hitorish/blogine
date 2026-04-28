@@ -8,13 +8,14 @@
 
 | 경로 | 역할 |
 |------|------|
-| `v1/` … `v5/` | 참고용 영상 템플릿. **`v5/`가 정본 — 이걸 복사해서 시작** |
-| `assets/images/`, `assets/audio/` | 참고 영상에서 쓰는 에셋 (수정 금지) |
+| `template/` | 영상 생성용 정본 템플릿. **이걸 복사해서 시작** |
+| `assets/images/`, `assets/audio/` | 템플릿에서 쓰는 샘플 에셋 (수정 금지) |
 | `sessions/<id>/input/` | 사용자 입력 (생성 요청마다 1개) |
 | `sessions/<id>/output/` | **당신이 만들어야 할 결과물** |
 | `server.js`, `public/` | 데모 웹서버/프론트 |
+| `docs/` | 템플릿 내부 구조 문서 (참고) |
 
-## v5 video template
+## Video template
 
 영상은 9개 씬, 총 ~90–130초.
 
@@ -35,7 +36,7 @@
 
 ## 생성 작업 (`sessions/<id>/output/` 만들기)
 
-1. **시작**: `v5/`를 통째로 `sessions/<id>/output/`으로 복사.
+1. **시작**: `template/`를 통째로 `sessions/<id>/output/`으로 복사.
 2. **입력 읽기**:
    - `sessions/<id>/input/content.txt` — 블로그 텍스트
    - `sessions/<id>/input/images/` — 업로드된 이미지 (`1.png`, `2.png`, …)
@@ -53,15 +54,15 @@
 
 ## Hard rules
 
-- **절대** `v1/`–`v5/`, `assets/`를 수정하지 말 것 (참고용)
+- **절대** `template/`, `assets/`를 수정하지 말 것 (참고용)
 - **절대** `capture.js`, `ffmpeg`, `puppeteer`를 호출하지 말 것 — 출력은 HTML
 - `player.js`가 쿼리하는 클래스 이름(`.heading`, `.body-text`, `.text-highlight`, `.anim-fade-up`, `.delay-1` … `.delay-8`, `.scene`, `.active` 등)은 그대로 유지
 - 새 외부 의존성/CDN 추가 금지
 - 한국어로 콘텐츠 작성 (블로그 입력이 한국어라면)
 
-## 참고: player.js가 기대하는 씬별 DOM (v5 기준)
+## 참고: player.js가 기대하는 씬별 DOM
 
-각 씬에 **반드시 있어야 하는** 요소가 player.js의 `animateScene()`에 하드코딩되어 있음. 새 영상도 v5와 같은 DOM 구조 유지:
+각 씬에 **반드시 있어야 하는** 요소가 player.js의 `animateScene()`에 하드코딩되어 있음. 새 영상도 template과 같은 DOM 구조 유지:
 
 - Scene 1: `.bg-photo`, `.title-main`, `.subtitle`, `.line-accent`
 - Scene 2: `.heading`, `.video-wrap` (없어도 OK), `.body-text`, `.highlight-box`, `.footnote`

@@ -90,7 +90,7 @@ assets/
 2. 씬 시간 = TTS 길이 + 2~4초 (애니메이션 버퍼)
 3. player.js의 `SCENES` 배열에 반영
 
-예시 (v5 기준):
+예시 (template 기준):
 ```
 Scene 1: TTS 4.2s → 씬 6초  (+1.8s)
 Scene 2: TTS 12.4s → 씬 15초 (+2.6s)
