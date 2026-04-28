@@ -194,9 +194,7 @@ function showResult(url) {
       if (doc) {
         const style = doc.createElement('style');
         style.textContent =
-          '.controls,.watermark,.subtitle-bar{display:none!important}' +
-          'body{background:#000!important}' +
-          '.player-wrapper{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;border-radius:0!important;box-shadow:none!important}';
+          '.controls,.watermark,.subtitle-bar{display:none!important}';
         doc.head.appendChild(style);
       }
     } catch (_) { /* ignore */ }
