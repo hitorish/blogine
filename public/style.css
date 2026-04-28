@@ -156,12 +156,29 @@ button.ghost:hover {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 14px 16px;
+  padding: 12px 16px;
   border-radius: 10px;
   font-size: 15px;
   color: #64748b;
   transition: background .3s, color .3s;
 }
+.stage-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 18px;
+  flex: 1;
+}
+.stage-title { font-weight: 500; }
+.stage-sub {
+  font-size: 12px;
+  color: #475569;
+  height: 16px;
+  line-height: 16px;
+  transition: color .3s, opacity .3s;
+}
+.stage.active .stage-sub { color: #d97706; }
+.stage.done .stage-sub { display: none; }
 .stage .dot {
   width: 20px; height: 20px;
   border: 2px solid rgba(148, 163, 184, 0.3);
@@ -205,7 +222,8 @@ button.ghost:hover {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.elapsed { color: #475569; margin-top: 24px; font-size: 12px; font-variant-numeric: tabular-nums; text-align: center; }
+.loading-hint { text-align: center; margin-top: 20px; font-size: 13px; }
+.elapsed { color: #475569; margin-top: 8px; font-size: 12px; font-variant-numeric: tabular-nums; text-align: center; }
 
 #result { padding: 32px; }
 .phone {

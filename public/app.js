@@ -119,28 +119,75 @@ generateBtn.addEventListener('click', async () => {
   }
 });
 
-const STAGE_DURATIONS = [12, 60, 35]; // s for stages 0, 1, 2 (stage 3 holds until done)
-let stageTimer = null;
+const STAGES = [
+  { duration: 25, subs: ['이미지 살펴보는 중…', '블로그 텍스트 분석 중…', '주제 추리는 중…'] },
+  { duration: 80, subs: ['9개 씬으로 분할 중…', '인트로 디자인 중…', '본문 흐름 짜는 중…', '아웃트로 정리 중…'] },
+  { duration: 110, subs: ['HTML 마크업 작성 중…', '씬별 컴포넌트 구성 중…', '이미지 배치 중…', '레이아웃 정렬 중…'] },
+  { duration: 110, subs: ['색감 고르는 중…', '타이포그래피 적용 중…', '여백·간격 조정 중…', '강조 포인트 잡는 중…'] },
+  { duration: 90, subs: ['씬 전환 효과 추가 중…', '하이라이트 효과 입히는 중…', '타이밍 맞추는 중…', '재생 흐름 조율 중…'] },
+  { duration: 9999, subs: ['연결 확인 중…', '최종 검수 중…', '거의 다 됐어요…', '마지막 점검 중…'] },
+];
+const SUB_ROTATE_MS = 6500;
+let stageTimers = [];
+let subRotateTimer = null;
 
 function startStages() {
-  stageEls.forEach((el) => el.classList.remove('active', 'done'));
-  let cur = 0;
-  stageEls[0].classList.add('active');
+  stageEls.forEach((el) => {
+    el.classList.remove('active', 'done');
+    const sub = el.querySelector('.stage-sub');
+    if (sub) sub.textContent = '';
+  });
+  activateStage(0);
+}
 
-  function advance() {
-    if (cur >= 3) return;
-    stageEls[cur].classList.remove('active');
-    stageEls[cur].classList.add('done');
-    cur++;
-    stageEls[cur].classList.add('active');
-    if (cur < 3) stageTimer = setTimeout(advance, STAGE_DURATIONS[cur] * 1000);
+function activateStage(idx) {
+  if (idx >= STAGES.length) return;
+  stageEls[idx].classList.add('active');
+  rotateSubs(idx);
+  if (idx < STAGES.length - 1) {
+    const t = setTimeout(() => {
+      stopSubs();
+      stageEls[idx].classList.remove('active');
+      stageEls[idx].classList.add('done');
+      activateStage(idx + 1);
+    }, STAGES[idx].duration * 1000);
+    stageTimers.push(t);
   }
-  stageTimer = setTimeout(advance, STAGE_DURATIONS[0] * 1000);
+}
+
+function rotateSubs(idx) {
+  const subs = STAGES[idx] && STAGES[idx].subs;
+  const subEl = stageEls[idx] && stageEls[idx].querySelector('.stage-sub');
+  if (!subs || !subEl) return;
+  let i = 0;
+  subEl.textContent = subs[0];
+  subRotateTimer = setInterval(() => {
+    i = (i + 1) % subs.length;
+    subEl.textContent = subs[i];
+  }, SUB_ROTATE_MS);
+}
+
+function stopSubs() {
+  if (subRotateTimer) { clearInterval(subRotateTimer); subRotateTimer = null; }
 }
 
 function finishStages() {
-  if (stageTimer) { clearTimeout(stageTimer); stageTimer = null; }
-  stageEls.forEach((el) => { el.classList.remove('active'); el.classList.add('done'); });
+  stageTimers.forEach((t) => clearTimeout(t));
+  stageTimers = [];
+  stopSubs();
+  stageEls.forEach((el) => {
+    el.classList.remove('active');
+    el.classList.add('done');
+    const sub = el.querySelector('.stage-sub');
+    if (sub) sub.textContent = '';
+  });
+}
+
+function fmtElapsed(s) {
+  if (s < 60) return `${s}초`;
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${m}분 ${String(sec).padStart(2, '0')}초`;
 }
 
 function startElapsedTimer() {
@@ -148,7 +195,7 @@ function startElapsedTimer() {
   elapsedEl.textContent = '0초';
   return setInterval(() => {
     const s = Math.floor((Date.now() - start) / 1000);
-    elapsedEl.textContent = `${s}초`;
+    elapsedEl.textContent = fmtElapsed(s);
   }, 1000);
 }
 

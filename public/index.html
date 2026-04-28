@@ -11,7 +11,7 @@
 <div id="app">
   <header class="hero">
     <h1>Blogine</h1>
-    <p class="tagline">블로그 글 → 9:16 숏폼 영상 · 9씬 · ~120초</p>
+    <p class="tagline">블로그 글 → 9:16 숏폼 영상 · 9씬 · 약 2분 분량</p>
   </header>
 
   <section id="form" class="card">
@@ -35,11 +35,50 @@
 
   <section id="loading" class="card hidden">
     <ul class="stages" id="stages">
-      <li class="stage" data-stage="0"><span class="dot"></span>입력 분석</li>
-      <li class="stage" data-stage="1"><span class="dot"></span>9씬 설계</li>
-      <li class="stage" data-stage="2"><span class="dot"></span>애니메이션 합성</li>
-      <li class="stage" data-stage="3"><span class="dot"></span>마무리</li>
+      <li class="stage" data-stage="0">
+        <span class="dot"></span>
+        <span class="stage-text">
+          <span class="stage-title">입력 읽기</span>
+          <span class="stage-sub"></span>
+        </span>
+      </li>
+      <li class="stage" data-stage="1">
+        <span class="dot"></span>
+        <span class="stage-text">
+          <span class="stage-title">씬 구조 잡기</span>
+          <span class="stage-sub"></span>
+        </span>
+      </li>
+      <li class="stage" data-stage="2">
+        <span class="dot"></span>
+        <span class="stage-text">
+          <span class="stage-title">레이아웃 만들기</span>
+          <span class="stage-sub"></span>
+        </span>
+      </li>
+      <li class="stage" data-stage="3">
+        <span class="dot"></span>
+        <span class="stage-text">
+          <span class="stage-title">스타일·타이포 다듬기</span>
+          <span class="stage-sub"></span>
+        </span>
+      </li>
+      <li class="stage" data-stage="4">
+        <span class="dot"></span>
+        <span class="stage-text">
+          <span class="stage-title">애니메이션 합성</span>
+          <span class="stage-sub"></span>
+        </span>
+      </li>
+      <li class="stage" data-stage="5">
+        <span class="dot"></span>
+        <span class="stage-text">
+          <span class="stage-title">마무리 점검</span>
+          <span class="stage-sub"></span>
+        </span>
+      </li>
     </ul>
+    <p class="hint loading-hint">꼼꼼하게 만들고 있어요. 보통 3~10분 걸립니다.</p>
     <p id="elapsed" class="elapsed"></p>
   </section>
 
