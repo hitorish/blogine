@@ -83,13 +83,26 @@ app.post('/api/session/:id/generate', (req, res) => {
   session.error = null;
 
   const prompt = [
-    `Generate the video for session ${id}.`,
+    `HEADLESS RUN. Do not ask questions. Do not list options. Do not explain.`,
+    `Just do the work and exit when done.`,
     ``,
-    `Read sessions/${id}/input/content.txt and sessions/${id}/input/images/, then write the complete output to sessions/${id}/output/.`,
+    `TASK: Generate the 9:16 short-form video for session "${id}".`,
     ``,
-    `Follow CLAUDE.md exactly. Start by copying template/ to sessions/${id}/output/, then adapt it.`,
+    `Inputs are already in place at sessions/${id}/input/:`,
+    `  - images/ (numbered 1.<ext>, 2.<ext>, ...)`,
+    `  - content.txt (may be empty — if empty, infer the topic and copy from the images themselves; this is intentional, not an error)`,
     ``,
-    `When sessions/${id}/output/index.html is ready, write the file sessions/${id}/output/.done with content "ok".`,
+    `Output goes to sessions/${id}/output/. Procedure:`,
+    `  1. Copy template/ to sessions/${id}/output/ (preserve every file).`,
+    `  2. Edit sessions/${id}/output/index.html — replace scene content with content derived from session "${id}", and rewrite every <img src> to ../input/images/<n>.<ext>.`,
+    `  3. Edit sessions/${id}/output/js/player.js — rewrite the SUBTITLES array, set every SCENE_AUDIO entry to '', and adjust SCENES timings so the total is roughly 120 seconds.`,
+    `  4. Read CLAUDE.md for the per-scene DOM contract — keep the same class names and structure.`,
+    `  5. Verify every scene-N has populated content and every <img src> resolves to a real file in sessions/${id}/input/images/.`,
+    `  6. Write sessions/${id}/output/.done containing the text "ok".`,
+    ``,
+    `Other directories under sessions/ belong to other runs. Do NOT read them, list them, or reference them. Work only inside sessions/${id}/.`,
+    ``,
+    `Begin now.`,
   ].join('\n');
 
   const logPath = path.join(ROOT, 'sessions', id, 'claude.log');
