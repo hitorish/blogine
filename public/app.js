@@ -84,7 +84,7 @@ sampleBtn.addEventListener('click', async () => {
   } catch (err) {
     sampleBtn.textContent = original;
     sampleBtn.disabled = false;
-    alert('샘플을 불러오지 못했어요: ' + err.message);
+    alert('샘플을 불러오지 못했어요. ' + sanitizeUserMessage(err && err.message));
   }
 });
 
@@ -214,10 +214,14 @@ async function poll() {
       }
       if (res.state === 'error') {
         finishStages();
-        showError(res.error || 'generation failed');
+        showError(res.error || '');
         return;
       }
     }
+  } catch (err) {
+    // Server died mid-poll, network blip, etc. — sanitizer makes it presentable.
+    finishStages();
+    showError(err && err.message ? err.message : String(err));
   } finally {
     clearInterval(elapsedTimer);
   }
@@ -262,12 +266,22 @@ function showError(msg) {
   errorText.textContent = sanitizeUserMessage(msg);
 }
 
-// Defense in depth: never let internal tool names leak to the UI.
-// Server-side strings are already sanitized — this catches any
-// network/library error messages that might bubble up.
+// Defense in depth: keep raw browser/library errors out of the UI.
+// Server-side strings are already Korean — this only kicks in for
+// errors that originate in the browser (fetch failures, etc.).
 function sanitizeUserMessage(msg) {
   const text = String(msg || '').trim();
   if (!text) return '잠시 후 다시 시도해주세요.';
+
+  // Network class — most common cause is the server isn't reachable.
+  if (/failed to fetch|networkerror|network ?error|load failed|connection refused|err_connection/i.test(text)) {
+    return '서버 연결이 끊겼어요. 잠시 후 다시 시도해주세요.';
+  }
+  // Aborted / timeout
+  if (/abort|timeout|timed out/i.test(text)) {
+    return '응답이 너무 오래 걸려요. 잠시 후 다시 시도해주세요.';
+  }
+
   const scrubbed = text
     .replace(/\bclaude(\s+code)?\b/gi, '생성기')
     .replace(/\banthropic\b/gi, '');
